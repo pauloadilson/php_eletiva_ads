@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos HTTP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <form class="form-inline" action="" method="get">
+        <div class="form-group  p-2">
+            <label class="mb-2 p-2" for="name">Informe seu nome:</label>
+            <input class="form-control m-2 p-2" type="text" name="name" />
+            <input class="btn btn-primary m-2 p-2" type="submit" value="ok" name="bt">
+        </div>
+    </form>
+    <form class="form-inline" action="resultado.php" method="POST">
+        <div class="form-group  p-2">
+            <label class="mb-2 p-2" for="name2">Informe seu nome:</label>
+            <input class="form-control m-2 p-2" type="text" name="name2" />
+            <input class="btn btn-primary m-2 p-2" type="submit" value="ok (POST)" name="bt">
+        </div>
+    </form>
+    <form class="form-inline" action="resultado.php" method="GET">
+        <div class="form-group  p-2">
+            <label class="mb-2 p-2" for="name3">Informe seu nome:</label>
+            <input class="form-control m-2 p-2" type="text" name="name3" />
+            <input class="btn btn-primary m-2 p-2" type="submit" value="ok (GET)" name="bt">
+        </div>
+    </form>
+</body>
+
+</html>

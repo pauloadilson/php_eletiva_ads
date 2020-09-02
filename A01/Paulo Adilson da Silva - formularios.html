@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Web - Exercício Formularios</title>
+</head>
+
+<body>
+    <div class="container border ">
+        <div class="row  mt-2 flex-row">
+            <div class="col-lg-4 col-sm-12 form-group">
+                <label for="fn">Primeiro Nome</label>
+                <input type="text" class="form-control" id="fn" placeholder="Paulo">
+            </div>
+            <div class="col-lg-4 col-sm-12 form-group">
+                <label for="ln">Sobrenome</label>
+                <input type="text" class="form-control" id="ln" placeholder="Silva">
+            </div>
+            <div class="col-lg-4 col-sm-12 form-group">
+                <label for="un">Nome de usuário</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 form-group">
+                <label for="city">Cidade</label>
+                <input type="text" class="form-control" id="city" placeholder="Cidade">
+            </div>
+            <div class="col-md-3 col-sm-6 form-group">
+                <label for="state">Estado</label>
+                <input type="text" class="form-control" id="state" placeholder="Estado">
+            </div>
+            <div class="col-md-3 col-sm-6 form-group">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" id="cep" placeholder="Ex. 19000300">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group ml-4">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Concordo com os termos e condições.</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group ml-4">
+                <button type="button" class="btn btn-primary">Enviar Formulário</button>
+            </div>
+        </div>
+        <hr>
+        <h1>Cadastros</h1>
+        <div class="ml-5">
+            <div class="row">
+                <div class="col-lg-1 col-sm-2 form-group">
+                    <label for="cd">Código</label>
+                    <input type="text" class="form-control" readonly id="cd" value="32">
+                </div>
+                <div class="col-lg-5 col-sm-10 form-group">
+                    <label for="cln">Nome</label>
+                    <input type="text" class="form-control" id="cln" placeholder="Nome completo do cliente">
+                </div>
+                <div class="col-lg-4 col-sm-8 form-group">
+                    <label for="cle">E-mail</label>
+                    <input type="text" class="form-control" id="cle" placeholder="nome@email.com">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" class="form-control" id="cpf" placeholder="Só numeros">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="cf">Nº Celular</label>
+                    <input type="text" class="form-control" id="cf" placeholder="Nº Celular">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="state">Nº Telefone</label>
+                    <input type="text" class="form-control" id="state" placeholder="Estado">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="cep2">CEP</label>
+                    <input type="text" class="form-control" id="cep2" placeholder="Ex. 19000300">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="log">Logradouro</label>
+                    <input type="text" class="form-control" id="log" placeholder="Ex. Rua 1400">
+                </div>
+                <div class="col-lg-1 col-sm-2 form-group">
+                    <label for="numb">Nº</label>
+                    <input type="text" class="form-control" id="numb" placeholder="Nº">
+                </div>
+                <div class="col-lg-3 col-sm-6 form-group">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" placeholder="Bairro">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="city2">Cidade</label>
+                    <input type="text" class="form-control" id="city2" placeholder="Cidade">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="uf">UF</label>
+                    <input type="text" class="form-control" id="uf" placeholder="Estado">
+                </div>
+                <div class="col-lg-2 col-sm-4 form-group">
+                    <label for="st">Status</label>
+                    <select class="form-control" name=" status " id="status ">
+                        <option value="select ">Selecione</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col form-group ml-4">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-danger">Limpar</button>
+                        <button type="button" class="btn btn-success">Próximo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js " integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js " integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV " crossorigin="anonymous "></script>
+</body>
+
+</html>
