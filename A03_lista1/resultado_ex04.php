@@ -12,13 +12,15 @@
   <h1 class="display-5">Olá! 
     <p class="lead mt-3">
     <?php
-    $valor = $_POST["valor2"];
-    if ($valor > 0) {
-      echo "O valor $valor é positivo.";
-    } elseif ($valor < 0){
-      echo "O valor $valor é negativo.";
-    } else {
-      echo "O valor digitado nulo!";
+    if($_POST) {
+      $valor = $_POST["valor2"];
+      if ($valor > 0) {
+        echo "O valor $valor é positivo.";
+      } elseif ($valor < 0){
+        echo "O valor $valor é negativo.";
+      } else {
+        echo "O valor digitado é zero!";
+      }
     }
     ?>
     </p>

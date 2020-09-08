@@ -107,13 +107,20 @@
             <form action="resultado_ex05.php" method="post">
                 <div class="form-group row">
                     <label for="notas" class="col-sm-12 col-form-label">Informe as notas:</label>
+                    <?php
+                    for ($i=1; $i<=4; $i++){
+                    ?>
                     <div class="input-group col-sm-12 mb-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text alt">Nota 1</span>
+                            <span class="input-group-text alt">Nota <?= $i ?></span>
                         </div>
-                        <input type="number" class="form-control" id="nota1" name="nota1" step='0.1' value='0.0' placeholder='0.0'>
+                        <input type="number" class="form-control" id="nota<?= $i ?>" name="nota<?= $i ?>" step='0.1' value='0.0' placeholder='0.0'>
                     </div>
-                    <div class="input-group col-sm-12 mb-1">
+                    <?php
+                    }   
+                    ?>
+                 
+<!--                <div class="input-group col-sm-12 mb-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text alt">Nota 2</span>
                         </div>
@@ -130,7 +137,7 @@
                             <span class="input-group-text alt">Nota 4</span>
                         </div>
                         <input type="number" class="form-control" id="nota1" name="nota4" step='0.1' value='0.0' placeholder='0.0'>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10">

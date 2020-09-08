@@ -12,7 +12,6 @@
   <h1 class="display-5">Olá! 
     <p class="lead mt-3">
     <?php
-    
     $valor = $_POST["valor"];
     if ($valor > 10) {
       echo "O valor $valor é maior que 10.";
