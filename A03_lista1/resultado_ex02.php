@@ -12,11 +12,13 @@
     <h1 class="display-5">Olá! </h1>
     <p class="lead mt-3">
     <?php
-    $pkg = $_POST["pkg"];
-    $qtdekg = $_POST["qtdekg"];
-    $total = $pkg *  $qtdekg;
-    $format_total = number_format($total, 2, ',', '.');
-    echo "O preço total a ser pago é R$ $format_total.";
+    if(isset($_POST['bt_ex02'])) { /* validação se existe a botao (precisa do nome) */
+      $pkg = $_POST["pkg"];
+      $qtdekg = $_POST["qtdekg"];
+      $total = $pkg *  $qtdekg;
+      $format_total = number_format($total, 2, ',', '.');
+      echo "O preço total a ser pago é R$ $format_total.";
+    }
     ?>
     </p>
   </div>
