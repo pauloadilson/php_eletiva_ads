@@ -44,7 +44,7 @@
                         return $num2;
                 }
 
-                if($_POST) {
+                if ($_POST) {
                     $n1 = $_POST["numInt1"];
                     $n2 = $_POST["numInt2"];
                     $lower = GetLower($n1, $n2);
@@ -57,6 +57,7 @@
                 ?>
             </div>
         </div>
+        <div><a href="index.php" class="badge badge-primary text-wrap"> voltar.</a></div>
     </div>
 
     <!-- Optional JavaScript -->
