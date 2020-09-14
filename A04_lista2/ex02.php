@@ -35,7 +35,7 @@
             ?>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <input type="submit" class="btn btn-primary" name="bt_ex01" value='Comparar e exibir'>
+                        <input type="submit" class="btn btn-primary" name="bt_ex02" value='Exibir a soma dos divisores'>
                     </div>
                 </div>
             </form>
@@ -57,7 +57,7 @@
                 if($_POST) {
                     echo "<div class='p-4 bg-dark text-white text-center'>";
                     
-                    for ($i = 1; $i < 5; $i++) {
+                    for ($i = 1; $i <= 5; $i++) {
                         $num = $_POST["numInt$i"];
                         if ($_POST["numInt$i"] != "") {
                             $num = $_POST["numInt$i"];
