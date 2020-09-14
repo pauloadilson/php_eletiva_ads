@@ -18,7 +18,7 @@
         <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action active">Lista de Exercício 2</a>
             <?php
-                $descricao = array('Menor de dois','Soma dos divisores','Verifica se é par ? 1 : 0','Positivo/Negativo/Zero','Calcula IMC','Cadastro e Verifica Senha','Busca na internet');
+                $descricao = array('Menor de dois','Soma dos divisores','Verifica se é par ? 1 : 0','Positivo/Negativo/Zero','Calcula IMC','Cadastro e Verifica Senha','Busca na internet: Criptografia em PHP');
                 for ($i=1; $i<=7; $i++){
                 ?>
                 <a href="ex0<?= $i ?>.php" class="list-group-item list-group-item-action">Aula 0<?= $i ?> - <?= $descricao[$i-1] ?></a>
@@ -26,6 +26,7 @@
                 }   
             ?>
          </div>
+        <div><a href="../index.html" class="badge badge-primary text-wrap"> voltar.</a></div>
     </div>
 
     <!-- Optional JavaScript -->
