@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- jmask validação front end no JS -->
-    <title>Exercício 1 - Lista 2</title>
+    <title>Exercício 5 - Lista 2</title>
     <style>
     </style>
 </head>
 
 <body>
     <div class="container p-4">
-        <h1>Exercício 1 - Lista 2</h1>
+        <h1>Exercício 5 - Lista 2</h1>
         <div class=" p-4">
             <form class="form" id="form1" method="post">
                 <div class="form-group row">
