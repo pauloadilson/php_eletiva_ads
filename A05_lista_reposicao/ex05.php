@@ -18,24 +18,16 @@
         <div class=" p-4">
             <h6>Resolução da equação de 2º Grau utilizando a fórmula de Bhaskara</h6>
             <form class="form" id="form1" method="post">
+            <?php
+                $array = ["a", "b", "c"];
+                for ($i=0; $i<count($array); $i++){ ?>
                 <div class="form-group row">
-                    <label for="aValue" class="col-sm-8 col-form-label">Informe o valor de a:</label>
+                    <label for="<?= $array[$i] ?>Value" class="col-sm-8 col-form-label">Informe o valor de <?= $array[$i] ?>:</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" id="aValue" required name="aValue" placeholder='0' value="0" >
+                        <input type="number" class="form-control" id="<?= $array[$i] ?>Value" required name="<?= $array[$i] ?>Value" placeholder='0' value="0" >
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="bValue" class="col-sm-8 col-form-label">Informe o valor de b:</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" id="bValue" required name="bValue" placeholder='0' value="0" >
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="cValue" class="col-sm-8 col-form-label">Informe o valor de c:</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" id="cValue" required name="cValue" placeholder='0' value="0" >
-                    </div>
-                </div>
+            <?php } ?>
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <input type="submit" class="btn btn-primary" name="bt_ex01" value='Comparar e exibir'>
@@ -70,7 +62,6 @@
                     $b = $_POST["bValue"];
                     $c = $_POST["cValue"];
                     $roots = Bhaskara($a, $b, $c);
-                    #print_r($roots);
                     if ($roots == 0)
                         echo "Como o valor de a informado é igual a 0, esta não é uma equação do segundo grau!";
                     else if ($roots == -1)
@@ -78,11 +69,11 @@
                     else {
                         if (count($roots) == 1){
                             $x = $roots['x'];
-                            echo "A equação possui apenas uma equação real igual a $x.";
+                            echo "A equação possui apenas uma raiz real igual a $x.";
                         } else {
                             $x1 = $roots['x1'];
                             $x2 = $roots['x2'];
-                            echo "A equação possui duas equações reais igual a $x1 e $x2.";
+                            echo "A equação possui duas raizes reais igual a $x1 e $x2.";
                         }
                     }
                     echo "</div>";
