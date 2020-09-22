@@ -20,7 +20,7 @@
                 <div class="form-group row">
                     <label for="intNum1" class="col-sm-6 col-form-label">Informe a altura:</label>
                     <div class="input-group col-sm-6 ">
-                        <input type="number" class="form-control" id="intNum1" name="intNum1" step='0.01' value='0.01' placeholder='0.01' min="0.01">
+                        <input type="number" class="form-control" id="intNum1" name="intNum1" step='0.01' value='0.00' placeholder='0.00' min="0.01">
                         <div class="input-group-append ">
                             <span class="input-group-text alt">m.</span>
                         </div>
@@ -29,7 +29,7 @@
                 <div class="form-group row">
                     <label for="intNum2" class="col-sm-6 col-form-label">Informe o peso:</label>
                     <div class="input-group col-sm-6 ">
-                        <input type="number" class="form-control" id="intNum2" name="intNum2" step='0.1' value='0.1' placeholder='0.1' min="0.1">
+                        <input type="number" class="form-control" id="intNum2" name="intNum2" step='0.1' value='0.0' placeholder='0.0' min="0.1">
                         <div class="input-group-append ">
                             <span class="input-group-text alt">kg.</span>
                         </div>
@@ -43,22 +43,23 @@
             </form>
              
                 <?php 
-                function getBMI($height, $weight) 
-                {
-                   return $weight / ($height * $height);
-                }
-
-                function BMIClassification($BMI) 
-                {
-                   if ($BMI < 18.5) echo "Você está abaixo do peso";
-                   elseif ($BMI < 25)  echo"Você está no peso ideal. Parabéns!!";
-                   elseif ($BMI < 30)  echo"Você está levemente acima do peso.";
-                   elseif ($BMI < 35)  echo"Você apresenta obesidade de grau I.";
-                   elseif ($BMI < 40)  echo"Você apresenta obesidade de grau II (severa).";
-                   else echo"Você apresenta obesidade de grau II (severa).";
-                }
-
                 if ($_POST) {
+
+                    function getBMI($height, $weight) 
+                    {
+                       return $weight / ($height * $height);
+                    }
+    
+                    function BMIClassification($BMI) 
+                    {
+                       if ($BMI < 18.5) echo "Você está abaixo do peso";
+                       elseif ($BMI < 25)  echo"Você está no peso ideal. Parabéns!!";
+                       elseif ($BMI < 30)  echo"Você está levemente acima do peso.";
+                       elseif ($BMI < 35)  echo"Você apresenta obesidade de grau I.";
+                       elseif ($BMI < 40)  echo"Você apresenta obesidade de grau II (severa).";
+                       else echo"Você apresenta obesidade de grau III.";
+                    }
+
                     //var_dump($_POST);
                     echo "<div class='p-4 m-5 bg-dark text-white text-center'>";
                     $n1 = $_POST["intNum1"];
