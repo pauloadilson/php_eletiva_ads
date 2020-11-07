@@ -8,15 +8,9 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- jmask validação front end no JS -->
-    <title>Usuários</title>
-    <?php
-    require_once("classes/config/Conexao.class.php");
-    require_once("classes/model/dao/UsuarioDAO.class.php");
-    require_once("classes/model/domain/Usuario.class.php");
-    require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
-    require_once("classes/model/dao/TipoDeUsuarioDAO.class.php");
-
-    ?>
+    <title>Exercício 1 - Lista 3</title>
+    <style>
+    </style>
 </head>
 
 <body>
@@ -29,7 +23,7 @@
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
                         <a class="btn btn-light" data-toggle="collapse" href="#inserirUsuario" role="button" aria-expanded="false" aria-controls="inserirUsuario">
-                            Novo Usuário
+                            Novo Participante
                         </a>
                         <div class="collapse mt-2" id="inserirUsuario">
                             <div class="card card-body">
@@ -51,16 +45,14 @@
                                             <label for="InstituicoesEnsino_idInstituicaoEnsino">Instituição de Ensino:</label>
                                             <select name="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
                                                 <?php
+                                                require_once("classes/config/Conexao.class.php");
+                                                require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
                                                 $dao = new InstituicaoDeEnsinoDAO();
-                                                $instituicoes = $dao->consultar();
-                                                while ($linha = $instituicoes->fetch(PDO::FETCH_ASSOC)) {
-                                                    //var_dump($linha);
-                                                    //var_dump($linha['idTipoUsuario'] != '4');
-                                                    if ($linha['idTipoUsuario'] != '4') {
+                                                $categorias = $dao->consultar();
+                                                while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
                                                 ?>
                                                     <option value="<?= $linha['idInstituicaoEnsino'] ?>"><?= $linha['nome'] ?></option>
                                                 <?php
-                                                }
                                                 }
                                                 ?>
                                             </select>
@@ -88,18 +80,9 @@
                                             <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="idTipoUsuario">Tipo de Usuário:</label>
-                                            <select name="idTipoUsuario" class="form-control mb-2">
-                                            <?php
-                                                $dao = new TipoDeUsuarioDAO();
-                                                $tiposDeUsuarios = $dao->consultar();
-                                                while ($linha = $tiposDeUsuarios->fetch(PDO::FETCH_ASSOC)) {
-                                                        ?>
-                                                        <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
-                                                <?php 
-                                                }
-                                                ?>
-                                            </select>                                        </div>
+                                            <label for="tipoUsuario">Tipo de Usuário:</label>
+                                            <input type="text" class="form-control mb-2" id="tipoUsuario" name="tipoUsuario">
+                                        </div>
                                         <button class="btn btn-primary ml-3" type="submit" name="btnIncUser">Incluir Usuário</button>
                                     </div>
                                     </form>
@@ -109,7 +92,11 @@
                             <?php
                             if (isset($_POST["btnIncUser"])) {
                                 $_GET = array();
-                                var_dump($_POST);
+
+                                require_once("classes/config/Conexao.class.php");
+                                require_once("classes/model/dao/UsuarioDAO.class.php");
+                                require_once("classes/model/domain/Usuario.class.php");
+                                //var_dump($_POST);
 
                                 $usuario = new Usuario();
                                 $usuario->nome = $_POST['nome'];
@@ -120,8 +107,7 @@
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
                                 $usuario->senhaAcesso = $_POST['senhaAcesso'];
-                                $usuario->idTipoUsuario = $_POST['idTipoUsuario'];
-                                var_dump($usuario);
+                                $usuario->tipoUsuario = $_POST['tipoUsuario'];
 
 
                                 $dao = new UsuarioDAO();
@@ -195,19 +181,12 @@
                                 //var_dump($nomeInstituicao);
                                 return $nomeInstituicao;
                             }
-                            function getTUTipo($idTipoUsuario) {
-                                //var_dump($idTipoUsuario);
-
-                                $TUdao = new TipoDeUsuarioDAO();
-                                $tipoUsuario = $TUdao->consultarTipoPeloId($idTipoUsuario);
-                                //var_dump($tipoUsuario);
-                                return $tipoUsuario;
-                            }
+                            
                             
                             $UserDao = new UsuarioDAO();
                             $usuarios = $UserDao->consultar();
                             while ($linha = $usuarios->fetch(PDO::FETCH_ASSOC)) {
-                                //var_dump($linha);
+                                // var_dump($linha);
                             ?>
                                 <tr key="<?= $linha['idUsuario'] ?>">
                                     <td><?= $linha['idUsuario'] ?></td>
@@ -215,7 +194,7 @@
                                     <td><?= $linha['telefone'] ?></td>
                                     <td><?= $linha['email'] ?></td>
                                     <td><?= getIEName($linha['InstituicoesEnsino_idInstituicaoEnsino']) ?></td>
-                                    <td><?= $linha['idTipoUsuario'] ?> - <?= getTUTipo($linha['idTipoUsuario']) ?></td>
+                                    <td><?= $linha['tipoUsuario'] ?></td>
                                     <td>
                                         <a href="user_alter.php?idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="user.php?parem=delete&amp;idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>

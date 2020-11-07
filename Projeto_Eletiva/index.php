@@ -17,8 +17,8 @@
         <div class="app">
         <?php require_once("header.php"); ?>
         <!-- <?php require_once("main.php"); ?>  -->
+        <?php require_once("menu.php"); ?>
         <main class="content" >
-            <?php require_once("menu.php"); ?>
             <div class="container-fluid ">
                 <div class="p-3 mt-3">
                     <div class='display-4'>Bem Vindo!</div>

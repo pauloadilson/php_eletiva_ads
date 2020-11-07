@@ -1,5 +1,6 @@
 <?php 
 class Participante {
+    private $idParticipantes;
     private $Responsaveis_idResponsaveis;
     private $InstituicoesEnsino_idInstituicaoEnsino;
     private $nome;

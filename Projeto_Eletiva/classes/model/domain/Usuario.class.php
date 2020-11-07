@@ -4,7 +4,7 @@ class Usuario {
     private $nome;
     private $pais;
     private $email;
-    private $tipoUsuario;
+    private $idTipoUsuario;
     private $senhaAcesso;
     private $telefone;
     private $tipoDoc;
@@ -18,4 +18,4 @@ class Usuario {
         return $this->$atrib;
     }
 }
-?>
+?> 
