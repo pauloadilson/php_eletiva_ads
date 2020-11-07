@@ -23,9 +23,8 @@
 <body>
     <div id="root">
         <div class="app">
-            <?php require_once("header.php"); ?>
-            <!-- <?php require_once("main.php"); ?>  -->
-            <?php require_once("menu.php"); ?>
+            <?php require_once("template/header.php"); ?>
+            <?php require_once("template/menu.php"); ?>
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
@@ -68,8 +67,8 @@
                                                 //require_once("classes/config/Conexao.class.php");
                                                 require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
                                                 $dao = new InstituicaoDeEnsinoDAO();
-                                                $categorias = $dao->consultar();
-                                                while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
+                                                $instituicoes = $dao->consultar();
+                                                while ($linha = $instituicoes->fetch(PDO::FETCH_ASSOC)) {
                                                     //var_dump($linha);
                                                     //var_dump($resultado);
                                                     if ($linha['idTipoUsuario'] != '4') {
@@ -109,22 +108,24 @@
                                             <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso" value="<?= $resultado['senhaAcesso'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="idTipoUsuario">Tipo de Usuário:</label>
-                                            <select name="idTipoUsuario" class="form-control mb-2">
+                                            <label for="TipoDeUsuario_idTipoUsuario">Tipo de Usuário:</label>
+                                            <select name="TipoDeUsuario_idTipoUsuario" class="form-control mb-2">
                                             <?php
                                                 $dao = new TipoDeUsuarioDAO();
                                                 $tiposDeUsuarios = $dao->consultar();
                                                 while ($linha = $tiposDeUsuarios->fetch(PDO::FETCH_ASSOC)) {
-                                                    var_dump($linha);
-                                                    var_dump($resultado);
-                                                    if ($linha['id'] == $resultado['idTipoUsuario']) {?>
-                                                        <option value="<?= $linha['id'] ?>" selected><?= $linha['tipo'] ?></option>
+                                                    if ($linha['idTipoUsuario'] != '4') {
+
+                                                    //var_dump($linha);
+                                                    //var_dump($resultado);
+                                                    if ($linha['idTipoUsuario'] == $resultado['TipoDeUsuario_idTipoUsuario']) {?>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>" selected><?= $linha['tipoUsuario'] ?></option>
                                                     <?php 
                                                     } else {?>
                                                         ?>
-                                                        <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>"><?= $linha['tipoUsuario'] ?></option>
                                                 <?php 
-                                                }
+                                                }}
                                                 }
                                                 ?>
                                             </select>
@@ -146,13 +147,13 @@
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
                                 $usuario->senhaAcesso = $_POST['senhaAcesso'];
-                                $usuario->idTipoUsuario = $_POST['idTipoUsuario'];
-                                var_dump($usuario);
+                                $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
+                                // var_dump($usuario);
 
 
     
                                 $dao = new UsuarioDAO();
-                                var_dump($dao->alterar($usuario));
+                                // var_dump($dao->alterar($usuario));
                                 if ($dao->alterar($usuario))
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
                                         Registro de usuário alterado com sucesso! <a href='user.php'class='alert-link' >Retornar.</a>
@@ -177,7 +178,7 @@
 
                     </div>
             </main>
-            <?php require_once("footer.php"); ?>
+            <?php require_once("template/footer.php"); ?>
         </div>
     </div>
 

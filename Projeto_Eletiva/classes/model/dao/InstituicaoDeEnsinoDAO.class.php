@@ -5,15 +5,15 @@ class InstituicaoDeEnsinoDAO {
 
     public function inserir($instituicao)
     {
-        $this->sql = "INSERT INTO instituicoesensino (nome,cidade,pais,idTipoUsuario) "
-        ."VALUES (:nome, :cidade, :pais, :idTipoUsuario)";
+        $this->sql = "INSERT INTO instituicoesensino (nome,cidade,pais,TipoDeUsuario_idTipoUsuario) "
+        ."VALUES (:nome, :cidade, :pais, :TipoDeUsuario_idTipoUsuario)";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql); // substituir parametros pelos valores a serm incluidos no BD
             $executar->bindValue(":nome", $instituicao->nome);
             $executar->bindValue(":cidade", $instituicao->cidade);
             $executar->bindValue(":pais", $instituicao->pais);
-            $executar->bindValue(":idTipoUsuario", $instituicao->idTipoUsuario);
+            $executar->bindValue(":TipoDeUsuario_idTipoUsuario", $instituicao->TipoDeUsuario_idTipoUsuario);
             return $executar->execute();
         } catch (Exception $e){
             return 0;
@@ -57,14 +57,14 @@ class InstituicaoDeEnsinoDAO {
         }     
      }
      public function alterar($instituicao){
-        $this->sql = "UPDATE instituicoesensino set nome = :nome, cidade = :cidade, pais = :pais, idTipoUsuario = :idTipoUsuario  where idInstituicaoEnsino = :idInstituicaoEnsino";
+        $this->sql = "UPDATE instituicoesensino set nome = :nome, cidade = :cidade, pais = :pais, TipoDeUsuario_idTipoUsuario = :TipoDeUsuario_idTipoUsuario  where idInstituicaoEnsino = :idInstituicaoEnsino";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
             $executar->bindValue(":nome", $instituicao->nome);
             $executar->bindValue(":cidade", $instituicao->cidade);
             $executar->bindValue(":pais", $instituicao->pais);
-            $executar->bindValue(":idTipoUsuario", $instituicao->idTipoUsuario);
+            $executar->bindValue(":TipoDeUsuario_idTipoUsuario", $instituicao->TipoDeUsuario_idTipoUsuario);
             $executar->bindValue(":idInstituicaoEnsino", $instituicao->idInstituicaoEnsino);
             return $executar->execute();
         } catch (Exception $e) {

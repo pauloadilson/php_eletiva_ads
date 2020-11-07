@@ -21,9 +21,8 @@
 <body>
     <div id="root">
         <div class="app">
-            <?php require_once("header.php"); ?>
-            <!-- <?php require_once("main.php"); ?>  -->
-            <?php require_once("menu.php"); ?>
+            <?php require_once("template/header.php"); ?>
+            <?php require_once("template/menu.php"); ?>
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
@@ -53,14 +52,14 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <label for="tipoDeUsuario" class="ccol-form-label">Tipo de Usuário:</label>
-                                            <select name="tipoDeUsuario" class="form-control mb-2">
+                                            <label for="TipoDeUsuario_idTipoUsuario" class="ccol-form-label">Tipo de Usuário:</label>
+                                            <select name="TipoDeUsuario_idTipoUsuario" class="form-control mb-2">
                                             <?php
                                                 $dao = new TipoDeUsuarioDAO();
                                                 $tiposDeUsuarios = $dao->consultar();
                                                 while ($linha = $tiposDeUsuarios->fetch(PDO::FETCH_ASSOC)) {
                                                         ?>
-                                                        <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>"><?= $linha['tipoUsuario'] ?></option>
                                                 <?php 
                                                 }
                                                 ?>
@@ -79,7 +78,7 @@
                             $instituicao->nome = $_POST['nomeInstituicao'];
                             $instituicao->cidade = $_POST['cidadeInstituicao'];
                             $instituicao->pais = $_POST['paisInstituicao'];
-                            $instituicao->idTipoUsuario = $_POST['tipoDeUsuario'];
+                            $instituicao->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
 
                             $instituicaoDAO = new InstituicaoDeEnsinoDAO();
                             if ($instituicaoDAO->inserir($instituicao))
@@ -161,7 +160,7 @@
                                     <td><?= $linha['nome'] ?></td>
                                     <td><?= $linha['cidade'] ?></td>
                                     <td><?= $linha['pais'] ?></td>
-                                    <td><?= getTUTipo($linha['idTipoUsuario']) ?></td>
+                                    <td><?= getTUTipo($linha['TipoDeUsuario_idTipoUsuario']) ?></td>
                                     <td>
                                         <a href="institution_alter.php?parem=alter&amp;idInstituicaoEnsino=<?= $linha['idInstituicaoEnsino'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="institution.php?parem=delete&amp;idInstituicaoEnsino=<?= $linha['idInstituicaoEnsino'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
@@ -176,7 +175,7 @@
 
                 </div>
             </main>
-            <?php require_once("footer.php"); ?>
+            <?php require_once("template/footer.php"); ?>
         </div>
     </div>
 

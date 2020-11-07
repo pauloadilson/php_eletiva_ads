@@ -21,9 +21,8 @@
 <body>
     <div id="root">
         <div class="app">
-            <?php require_once("header.php"); ?>
-            <!-- <?php require_once("main.php"); ?>  -->
-            <?php require_once("menu.php"); ?>
+            <?php require_once("template/header.php"); ?>
+            <?php require_once("template/menu.php"); ?>
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
@@ -125,7 +124,7 @@
 
                     </div>
             </main>
-            <?php require_once("footer.php"); ?>
+            <?php require_once("template/footer.php"); ?>
         </div>
     </div>
 

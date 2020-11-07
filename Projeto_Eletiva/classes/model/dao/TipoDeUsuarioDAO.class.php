@@ -16,11 +16,11 @@ class TipoDeUsuarioDAO {
 
     }
     public function consultarId($idTipoUsuario){
-        $this->sql = "SELECT * from tipodeusuario where id = :id";
+        $this->sql = "SELECT * from tipodeusuario where idTipoUsuario = :idTipoUsuario";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
-            $executar->bindValue(":id", $idTipoUsuario);
+            $executar->bindValue(":idTipoUsuario", $idTipoUsuario);
             $executar->execute();
             return $executar->fetch();
         } catch (Exception $e) {
@@ -28,13 +28,13 @@ class TipoDeUsuarioDAO {
         }     
      }
      public function consultarTipoPeloId($idTipoUsuario){
-        $this->sql = "SELECT tipo from tipodeusuario where id = :id";
+        $this->sql = "SELECT tipoUsuario from tipodeusuario where idTipoUsuario = :idTipoUsuario";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
-            $executar->bindValue(":id", $idTipoUsuario);
+            $executar->bindValue(":idTipoUsuario", $idTipoUsuario);
             $executar->execute();
-            return $executar->fetch()['tipo'];
+            return $executar->fetch()['tipoUsuario'];
         } catch (Exception $e) {
             return 0;
         }     

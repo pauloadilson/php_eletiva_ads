@@ -22,9 +22,8 @@
 <body>
     <div id="root">
         <div class="app">
-            <?php require_once("header.php"); ?>
-            <!-- <?php require_once("main.php"); ?>  -->
-            <?php require_once("menu.php"); ?>
+            <?php require_once("template/header.php"); ?>
+            <?php require_once("template/menu.php"); ?>
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
@@ -56,7 +55,7 @@
                                                 while ($linha = $instituicoes->fetch(PDO::FETCH_ASSOC)) {
                                                     //var_dump($linha);
                                                     //var_dump($linha['idTipoUsuario'] != '4');
-                                                    if ($linha['idTipoUsuario'] != '4') {
+                                                    if ($linha['TipoDeUsuario_idTipoUsuario'] != '4') {
                                                 ?>
                                                     <option value="<?= $linha['idInstituicaoEnsino'] ?>"><?= $linha['nome'] ?></option>
                                                 <?php
@@ -88,16 +87,19 @@
                                             <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="idTipoUsuario">Tipo de Usuário:</label>
-                                            <select name="idTipoUsuario" class="form-control mb-2">
+                                            <label for="TipoDeUsuario_idTipoUsuario">Tipo de Usuário:</label>
+                                            <select name="TipoDeUsuario_idTipoUsuario" class="form-control mb-2">
                                             <?php
                                                 $dao = new TipoDeUsuarioDAO();
                                                 $tiposDeUsuarios = $dao->consultar();
                                                 while ($linha = $tiposDeUsuarios->fetch(PDO::FETCH_ASSOC)) {
+                                                    if ($linha['idTipoUsuario'] != '4') {
+
                                                         ?>
-                                                        <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>"><?= $linha['tipoUsuario'] ?></option>
                                                 <?php 
                                                 }
+                                            }
                                                 ?>
                                             </select>                                        </div>
                                         <button class="btn btn-primary ml-3" type="submit" name="btnIncUser">Incluir Usuário</button>
@@ -120,7 +122,7 @@
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
                                 $usuario->senhaAcesso = $_POST['senhaAcesso'];
-                                $usuario->idTipoUsuario = $_POST['idTipoUsuario'];
+                                $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
                                 var_dump($usuario);
 
 
@@ -133,7 +135,12 @@
                                         </button>
                                         </div>";
                                 else
-                                    echo "Erro ao inserir dado!";
+                                echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
+                                <strong>Erro</strong> ao alterar usuário! 
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>";
 
                                 $_POST = array();
                                 //var_dump($_POST);
@@ -215,7 +222,7 @@
                                     <td><?= $linha['telefone'] ?></td>
                                     <td><?= $linha['email'] ?></td>
                                     <td><?= getIEName($linha['InstituicoesEnsino_idInstituicaoEnsino']) ?></td>
-                                    <td><?= $linha['idTipoUsuario'] ?> - <?= getTUTipo($linha['idTipoUsuario']) ?></td>
+                                    <td><?= getTUTipo($linha['TipoDeUsuario_idTipoUsuario']) ?></td>
                                     <td>
                                         <a href="user_alter.php?idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="user.php?parem=delete&amp;idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
@@ -228,17 +235,17 @@
                         </table>
                     </div>
             </main>
-            <?php require_once("footer.php"); ?>
+            <?php require_once("template/footer.php"); ?>
         </div>
     </div>
-    <script>
-        $('.alert').alert()
-    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        $('.alert').alert()
+    </script>
 </body>
 
 </html>

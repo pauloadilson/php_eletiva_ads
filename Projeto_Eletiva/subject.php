@@ -11,14 +11,19 @@
     <title>Exercício 1 - Lista 3</title>
     <style>
     </style>
+    <?php
+        require_once("classes/config/Conexao.class.php");
+        require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
+        require_once("classes/model/dao/ParticipanteDAO.class.php");
+        require_once("classes/model/domain/Participante.class.php");
+    ?>
 </head>
 
 <body>
     <div id="root">
         <div class="app">
-            <?php require_once("header.php"); ?>
-            <!-- <?php require_once("main.php"); ?>  -->
-            <?php require_once("menu.php"); ?>
+            <?php require_once("template/header.php"); ?>
+            <?php require_once("template/menu.php"); ?>
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
@@ -45,8 +50,6 @@
                                             <label for="InstituicoesEnsino_idInstituicaoEnsino">Instituição de Ensino:</label>
                                             <select name="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
                                                 <?php
-                                                require_once("classes/config/Conexao.class.php");
-                                                require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
                                                 $dao = new InstituicaoDeEnsinoDAO();
                                                 $categorias = $dao->consultar();
                                                 while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
@@ -92,28 +95,23 @@
                             <?php
                             if (isset($_POST["btnIncUser"])) {
                                 $_GET = array();
-
-                                require_once("classes/config/Conexao.class.php");
-                                require_once("classes/model/dao/UsuarioDAO.class.php");
-                                require_once("classes/model/domain/Usuario.class.php");
                                 //var_dump($_POST);
 
-                                $usuario = new Usuario();
-                                $usuario->nome = $_POST['nome'];
-                                $usuario->telefone = $_POST['telefone'];
-                                $usuario->pais = $_POST['pais'];
-                                $usuario->InstituicoesEnsino_idInstituicaoEnsino = $_POST['InstituicoesEnsino_idInstituicaoEnsino'];
-                                $usuario->tipoDoc = $_POST['tipoDoc'];
-                                $usuario->numeroDoc = $_POST['numeroDoc'];
-                                $usuario->email = $_POST['email'];
-                                $usuario->senhaAcesso = $_POST['senhaAcesso'];
-                                $usuario->tipoUsuario = $_POST['tipoUsuario'];
+                                $participante = new Participante();
+                                $participante->InstituicoesEnsino_idInstituicaoEnsino = $_POST['InstituicoesEnsino_idInstituicaoEnsino'];
+                                $participante->nome = $_POST['nome'];
+                                $participante->dataNascimento = $_POST['dataNascimento'];
+                                $participante->pais = $_POST['pais'];
+                                $participante->grupo = $_POST['grupo'];
+                                $participante->primeiroResponsavel = $_POST['primeiroResponsavel'];
+                                $participante->segundoResponsavel = $_POST['segundoResponsavel'];
+                                $participante->telefone = $_POST['telefone'];
+                                $participante->Estudos_idEstudo = $_POST['Estudos_idEstudo'];
 
-
-                                $dao = new UsuarioDAO();
-                                if ($dao->inserir($usuario))
+                                $dao = new ParticipanteDAO();
+                                if ($dao->inserir($participante))
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                                        Inclusão de usuário realizada com sucesso.
+                                        Inclusão de participante realizada com sucesso.
                                         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                         <span aria-hidden='true'>&times;</span>
                                         </button>
@@ -128,9 +126,6 @@
 
                         <hr>
                         <?php
-                    require_once("classes/config/Conexao.class.php");
-                    require_once("classes/model/dao/UsuarioDAO.class.php");
-                    require_once("classes/model/domain/Usuario.class.php");
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
                         //var_dump($_GET);
@@ -165,15 +160,11 @@
                                     <th>Telefone</th>
                                     <th>E-mail</th>
                                     <th>Instituição de Ensino</th>
-                                    <th>Tipo de Usuário</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
-                            require_once("classes/config/Conexao.class.php");
-                            require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
-                            require_once("classes/model/dao/UsuarioDAO.class.php");
 
                             function getIEName($idInstituicaoEnsino) {
                                 $IEdao = new InstituicaoDeEnsinoDAO();
@@ -194,7 +185,6 @@
                                     <td><?= $linha['telefone'] ?></td>
                                     <td><?= $linha['email'] ?></td>
                                     <td><?= getIEName($linha['InstituicoesEnsino_idInstituicaoEnsino']) ?></td>
-                                    <td><?= $linha['tipoUsuario'] ?></td>
                                     <td>
                                         <a href="user_alter.php?idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="user.php?parem=delete&amp;idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
@@ -207,17 +197,17 @@
                         </table>
                     </div>
             </main>
-            <?php require_once("footer.php"); ?>
+            <?php require_once("template/footer.php"); ?>
         </div>
     </div>
-    <script>
-        $('.alert').alert()
-    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        $('.alert').alert()
+    </script>
 </body>
 
 </html>

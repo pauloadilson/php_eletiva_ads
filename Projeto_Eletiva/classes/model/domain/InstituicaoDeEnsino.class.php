@@ -4,7 +4,7 @@ class InstituicaoDeEnsino {
     private $nome;
     private $cidade;
     private $pais;
-    private $idTipoUsuario;
+    private $TipoDeUsuario_idTipoUsuario;
 
     public function __set($atrib , $value){  
         return $this->$atrib = $value;
