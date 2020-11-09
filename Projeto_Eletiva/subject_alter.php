@@ -10,6 +10,14 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
     <title>Participantes - Alteração</title>
+    <?php
+    require_once("classes/config/Conexao.class.php");
+    require_once("classes/model/dao/ParticipanteDAO.class.php");
+    require_once("classes/model/domain/Participante.class.php");
+    require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
+    require_once("classes/model/dao/EstudoDAO.class.php");
+    require_once("classes/model/dao/GrupoDAO.class.php");
+    ?>
 </head>
 
 <body>
@@ -21,54 +29,47 @@
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
                         <p class="h5 p-3">
-                            Alteração dos dados de usuário 
+                            Alteração dos dados de participante 
                         </p>
                         <div class="card card-body">
 
                             <?php
-                            require_once("classes/config/Conexao.class.php");
-                            require_once("classes/model/dao/UsuarioDAO.class.php");
-                            require_once("classes/model/domain/Usuario.class.php");
                             session_start();
                             //var_dump($_GET);
-                            if (!isset($_POST['btnAltUser'])) {
-                                $id = $_GET['idUsuario'];
+                            if (!isset($_POST['btnAltSub'])) {
+                                $id = $_GET['idParticipante'];
 
-                                $dao = new UsuarioDAO();
+                                $dao = new ParticipanteDAO();
                                 $resultado = $dao->consultarId($id);
                                 //var_dump($resultado);
 
                                 if ($resultado != 0) {
-                                    $_SESSION['idUsuario'] = $id;
+                                    $_SESSION['idParticipante'] = $id;
                                     ?>
-                                                                    <form action="" method="post">
+                                     <form action="" method="post">
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label for="nome">Nome:</label>
                                             <input type="text" class="form-control mb-2" id="nome" name="nome" value="<?= $resultado['nome'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="telefone">Telefone:</label>
-                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone" value="<?= $resultado['nome'] ?>">
+                                            <label for="dataNascimento">Data de Nascimento:</label>
+                                            <input type="date" class="form-control mb-2" id="dataNascimento" name="dataNascimento" value="<?= $resultado['dataNascimento'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="pais">País:</label>
-                                            <input type="text" class="form-control mb-2" id="pais" name="pais" value="<?= $resultado['nome'] ?>">
+                                            <input type="text" class="form-control mb-2" id="pais" name="pais" value="<?= $resultado['pais'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="InstituicoesEnsino_idInstituicaoEnsino">Instituição de Ensino:</label>
                                             <select name="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
                                                 <?php
-                                                //require_once("classes/config/Conexao.class.php");
-                                                require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
                                                 $dao = new InstituicaoDeEnsinoDAO();
-                                                $categorias = $dao->consultar();
-                                                while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
-                                                    //var_dump($linha);
-                                                    //var_dump($resultado);
-                                                    if ($linha['idTipoUsuario'] != '4') {
-                                                    
-                                                        if ($linha['idInstituicaoEnsino'] == $resultado['InstituicoesEnsino_idInstituicaoEnsino']) {?>
+                                                $instituicoes = $dao->consultar();
+                                                while ($linha = $instituicoes->fetch(PDO::FETCH_ASSOC)) {
+                                                    if ($linha['TipoDeUsuario_idTipoUsuario'] == '4') {
+                                                        if ($linha['idInstituicaoEnsino'] == $resultado['InstituicoesEnsino_idInstituicaoEnsino']) {
+                                                            ?>
                                                             <option value="<?= $linha['idInstituicaoEnsino'] ?>" selected><?= $linha['nome'] ?></option>
                                                         <?php 
                                                         } else {?>
@@ -87,50 +88,72 @@
                                             </small>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="tipoDoc">Tipo de Documento:</label>
-                                            <input type="text" class="form-control mb-2" id="tipoDoc" name="tipoDoc" value="<?= $resultado['tipoDoc'] ?>">
+                                            <label for="Estudos_idEstudo">Estudo:</label>
+                                            <?php
+                                                $EstudoDao = new EstudoDAO();
+                                                $estudo = $EstudoDao->consultarId($resultado['Estudos_idEstudo']);
+                                            ?>
+                                            <input type="text" class="form-control mb-2" id="Estudos_idEstudo" name="Estudos_idEstudo" value="<?= $estudo['titulo'] ?>" disabled>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label for="Grupos_idGrupo">Grupo:</label>
+                                            <select name="Grupos_idGrupo" class="form-control mb-2">
+                                            <?php
+                                                $dao = new GrupoDAO();
+                                                $grupos = $dao->consultar();
+                                                
+                                                while ($linha = $grupos->fetch(PDO::FETCH_ASSOC)) {
+                                                    //var_dump($linha['Estudos_idEstudo']);
+                                                    if ($linha['Estudos_idEstudo'] == $resultado['Estudos_idEstudo']) {
+                                                    ?>
+                                                        <option value="<?= $linha['idGrupo'] ?>"><?= $linha['nome'] ?></option>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group col-md-4">
+                                            <label for="primeiroResponsavel">Primeiro Responsável</label>
+                                            <input type="text" class="form-control mb-2" id="primeiroResponsavel" name="primeiroResponsavel" value="<?= $resultado['primeiroResponsavel'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="numeroDoc">Número do Documento:</label>
-                                            <input type="text" class="form-control mb-2" id="numeroDoc" name="numeroDoc" value="<?= $resultado['numeroDoc'] ?>">
+                                            <label for="segundoResponsavel">Segundo Responsável:</label>
+                                            <input type="text" class="form-control mb-2" id="segundoResponsavel" name="segundoResponsavel" value="<?= $resultado['segundoResponsavel'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="email">E-mail:</label>
-                                            <input type="email" class="form-control mb-2" id="email" name="email" value="<?= $resultado['email'] ?>">
+                                            <label for="telefone">Telefone:</label>
+                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone" value="<?= $resultado['telefone'] ?>">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="senhaAcesso">Senha:</label>
-                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso" value="<?= $resultado['senhaAcesso'] ?>">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="tipoUsuario">Tipo de Usuário:</label>
-                                            <input type="text" class="form-control mb-2" id="tipoUsuario" name="tipoUsuario" value="<?= $resultado['tipoUsuario'] ?>">
-                                        </div>
-                                        <button class="btn btn-primary ml-3" type="submit" name="btnAltUser">Alterar Usuário</button>
+                                       
+                                        <button class="btn btn-primary ml-3" type="submit" name="btnAltSub">Alterar participante </button>
                                     </div>
                                     </form>
-
-                            <?php
-                                }
+                                            <?php }
                             } else {
-                                $usuario = new Usuario();
-                                $usuario->idUsuario =  $_SESSION['idUsuario'];
-                                $usuario->nome = $_POST['nome'];
-                                $usuario->telefone = $_POST['telefone'];
-                                $usuario->pais = $_POST['pais'];
-                                $usuario->InstituicoesEnsino_idInstituicaoEnsino = $_POST['InstituicoesEnsino_idInstituicaoEnsino'];
-                                $usuario->tipoDoc = $_POST['tipoDoc'];
-                                $usuario->numeroDoc = $_POST['numeroDoc'];
-                                $usuario->email = $_POST['email'];
-                                $usuario->senhaAcesso = $_POST['senhaAcesso'];
-                                $usuario->tipoUsuario = $_POST['tipoUsuario'];
+                                var_dump($_POST);
+                                //var_dump($_SESSION['idParticipante']);
+                                $participante = new Participante();
+                                $participante->idParticipante = $_SESSION['idParticipante'];
+                                $participante->nome = $_POST['nome'];
+                                $participante->dataNascimento = $_POST['dataNascimento'];
+                                $participante->pais = $_POST['pais'];
+                                $participante->InstituicoesEnsino_idInstituicaoEnsino = $_POST['InstituicoesEnsino_idInstituicaoEnsino'];
+                                $participante->Grupos_idGrupo = $_POST['Grupos_idGrupo'];
+                                $participante->primeiroResponsavel = $_POST['primeiroResponsavel'];
+                                $participante->segundoResponsavel = $_POST['segundoResponsavel'];
+                                $participante->telefone = $_POST['telefone'];
+                                // var_dump($participante);
+
 
     
-                                $dao = new UsuarioDAO();
-                                //var_dump($dao->alterar($usuario));
-                                if ($dao->alterar($usuario))
+                                $dao = new ParticipanteDAO();
+                                // var_dump($dao->alterar($usuario));
+                                if ($dao->alterar($participante))
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                                        Registro de usuário alterado com sucesso! <a href='user.php'class='alert-link' >Retornar.</a>
+                                        Registro de usuário alterado com sucesso! <a href='subject.php'class='alert-link' >Retornar.</a>
                                         <button  type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                         <span aria-hidden='true'>&times;</span>
                                         </button>
@@ -143,7 +166,6 @@
                                 </button>
                             </div>";
                             }
-
                             ?>
                         </div>
 

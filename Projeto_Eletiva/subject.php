@@ -8,7 +8,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- jmask validação front end no JS -->
-    <title>Exercício 1 - Lista 3</title>
+    <title>Participantes</title>
     <style>
     </style>
     <?php
@@ -16,8 +16,11 @@
         require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
         require_once("classes/model/dao/EstudoDAO.class.php");
         require_once("classes/model/dao/ParticipanteDAO.class.php");
+        require_once("classes/model/dao/GrupoDAO.class.php");
         require_once("classes/model/domain/Participante.class.php");
     ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 
 <body>
@@ -48,36 +51,18 @@
                                             <input type="text" class="form-control mb-2" id="pais" name="pais">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="Estudos_idEstudo">Estudo:</label>
-                                            <select name="Estudos_idEstudo" class="form-control mb-2">
-                                                <?php
-                                                $dao = new EstudoDAO();
-                                                $estudos = $dao->consultar();
-                                                while ($linha = $estudos->fetch(PDO::FETCH_ASSOC)) {
-                                                ?>
-                                                    <option value="<?= $linha['idEstudo'] ?>"><?= $linha['titulo'] ?></option>
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="grupo">Grupo:</label>
-                                            <select name="grupo" class="form-control mb-2">
-                                                    <option value="controle">Controle</option>
-                                                    <option value="experimental">Experimental</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-4">
                                             <label for="InstituicoesEnsino_idInstituicaoEnsino">Instituição de Ensino:</label>
-                                            <select name="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
+                                            <select name="InstituicoesEnsino_idInstituicaoEnsino" id="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
                                                 <?php
                                                 $dao = new InstituicaoDeEnsinoDAO();
                                                 $categorias = $dao->consultar();
                                                 while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
+                                                    if ($linha['TipoDeUsuario_idTipoUsuario'] == '4') {
+
                                                 ?>
                                                     <option value="<?= $linha['idInstituicaoEnsino'] ?>"><?= $linha['nome'] ?></option>
                                                 <?php
+                                                    }
                                                 }
                                                 ?>
                                             </select>
@@ -88,6 +73,56 @@
                                                 </a>
                                             </small>
                                         </div>
+                                        <script>
+                                            $('#InstituicoesEnsino_idInstituicaoEnsino').on('change', function() {
+                                                alert( `idInstituicaoEnsino: ${this.value}` );
+                                                });
+                                        </script>
+                                        <div class="form-group col-md-4">
+                                            <label for="Estudos_idEstudo">Estudo:</label>
+                                            <select name="Estudos_idEstudo" id="Estudos_idEstudo" class="form-control mb-2">
+                                                <option selected>Escolha um estudo</option>
+                                                <?php
+
+                                                $dao = new EstudoDAO();
+                                                $estudos = $dao->consultar();
+                                                while ($linha = $estudos->fetch(PDO::FETCH_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $linha['idEstudo'] ?>"><?= $linha['titulo'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
+
+                                            </select>
+                                        </div>
+                                        <script>
+                                            $('#Estudos_idEstudo').on('change', function() {
+                                                var idEstudo = $('#Estudos_idEstudo').val(); 
+                                                //alert( `idEstudo: ${idEstudo}` );
+                                                $.ajax({
+                                                    url:'getGroups.php',
+                                                    type: 'POST',
+                                                    data:{Estudos_idEstudo:idEstudo},
+                                                    beforeSend: function (){
+                                                        $('#Grupos_idGrupo').html("<option>Carregando..</option>")
+                                                    },
+                                                    success: function (data) {
+                                                        $('#Grupos_idGrupo').html(data);
+                                                        
+                                                    },
+                                                    error: function (data) {
+                                                        $('#Grupos_idGrupo').html("Houve um erro ao carregar!");
+                                                        
+                                                    },
+                                                })
+                                                });
+                                        </script>
+                                        <div class="form-group col-md-4">
+                                            <label for="Grupos_idGrupo">Grupo:</label>
+                                            <select name="Grupos_idGrupo" id="Grupos_idGrupo" class="form-control mb-2">
+                                            </select>
+                                        </div>
+
                                         <div class="form-group col-md-4">
                                             <label for="primeiroResponsavel">Primeiro Responsável</label>
                                             <input type="text" class="form-control mb-2" id="primeiroResponsavel" name="primeiroResponsavel">
@@ -108,6 +143,7 @@
                                 </div>
                             </div>
                             <?php
+
                             if (isset($_POST["btnIncSub"])) {
                                 $_GET = array();
                                 //var_dump($_POST);
@@ -151,7 +187,7 @@
                         //var_dump($_GET);
                         $id=$_GET['idParticipante'];
                         $participante = new Participante();
-                        $participante->idparticipante = $id;
+                        $participante->idParticipante = $id;
                         //var_dump($participante);
                         $dao = new ParticipanteDAO();
                         if($dao->excluir($participante))
@@ -198,10 +234,16 @@
                                 return $nomeInstituicao;
                             }
                             function getEstudoTitulo($idEstudo) {
-                                $IEdao = new EstudoDAO();
-                                $tituloEstudo = $IEdao->consultarTituloPeloId($idEstudo);
-                                //var_dump($nomeInstituicao);
+                                $EstudoDao = new EstudoDAO();
+                                $tituloEstudo = $EstudoDao->consultarTituloPeloId($idEstudo);
+                                //var_dump($tituloEstudo);
                                 return $tituloEstudo;
+                            }
+                            function getGroupName($idGrupo,$idEstudo) {
+                                $grupoDao = new GrupoDAO();
+                                $nomeGrupo = $grupoDao->consultarNomeGrupo($idGrupo,$idEstudo);
+                                //var_dump($tituloEstudo);
+                                return $nomeGrupo;
                             }
                             
                             
@@ -216,7 +258,7 @@
                                     <td><?= $linha['dataNascimento'] ?></td>
                                     <td><?= $linha['pais'] ?></td>
                                     <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
-                                    <td><?= $linha['grupo'] ?></td>
+                                    <td><?= getGroupName($linha['Grupos_idGrupo'],$linha['Estudos_idEstudo']) ?></td>
                                     <td><?= $linha['primeiroResponsavel'] ?></td>
                                     <td><?= $linha['segundoResponsavel'] ?></td>
                                     <td><?= $linha['telefone'] ?></td>
@@ -238,7 +280,8 @@
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>

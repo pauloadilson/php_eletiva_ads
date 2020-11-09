@@ -50,19 +50,19 @@ class ParticipanteDAO {
         }     
      }
      public function alterar($participante){
-        $this->sql = "UPDATE participantes set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, dataNascimento = :dataNascimento, pais = :pais, grupo = :grupo, primeiroResponsavel = :primeiroResponsavel, segundoResponsavel = :segundoResponsavel, telefone = :telefone, Estudos_idEstudo = :Estudos_idEstudo  where idParticipante = :idParticipante";
+        $this->sql = "UPDATE participantes set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, dataNascimento = :dataNascimento, pais = :pais, Grupos_idGrupo = :Grupos_idGrupo, primeiroResponsavel = :primeiroResponsavel, segundoResponsavel = :segundoResponsavel, telefone = :telefone where idParticipante = :idParticipante";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
-            $executar->bindValue(":InstituicoesEnsino_idInstituicaoEnsino", $participante->InstituicoesEnsino_idInstituicaoEnsino);
             $executar->bindValue(":nome", $participante->nome);
             $executar->bindValue(":dataNascimento", $participante->dataNascimento);
             $executar->bindValue(":pais", $participante->pais);
-            $executar->bindValue(":grupo", $participante->grupo);
+            $executar->bindValue(":InstituicoesEnsino_idInstituicaoEnsino", $participante->InstituicoesEnsino_idInstituicaoEnsino);
+            $executar->bindValue(":Grupos_idGrupo", $participante->Grupos_idGrupo);
             $executar->bindValue(":primeiroResponsavel", $participante->primeiroResponsavel);
             $executar->bindValue(":segundoResponsavel", $participante->segundoResponsavel);
             $executar->bindValue(":telefone", $participante->telefone);
-            $executar->bindValue(":Estudos_idEstudo", $participante->Estudos_idEstudo);
+            $executar->bindValue(":idParticipante", $participante->idParticipante);
             return $executar->execute();
         } catch (Exception $e) {
             return 0;
