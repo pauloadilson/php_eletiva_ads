@@ -111,7 +111,7 @@
                             <?php
                             if (isset($_POST["btnIncUser"])) {
                                 $_GET = array();
-                                var_dump($_POST);
+                                //var_dump($_POST);
 
                                 $usuario = new Usuario();
                                 $usuario->nome = $_POST['nome'];
@@ -123,7 +123,7 @@
                                 $usuario->email = $_POST['email'];
                                 $usuario->senhaAcesso = $_POST['senhaAcesso'];
                                 $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
-                                var_dump($usuario);
+                                //var_dump($usuario);
 
 
                                 $dao = new UsuarioDAO();
@@ -136,7 +136,7 @@
                                         </div>";
                                 else
                                 echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                                <strong>Erro</strong> ao alterar usuário! 
+                                <strong>Erro</strong> ao incluir usuário! 
                                 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                 <span aria-hidden='true'>&times;</span>
                                 </button>
@@ -149,35 +149,31 @@
 
                         <hr>
                         <?php
-                    require_once("classes/config/Conexao.class.php");
-                    require_once("classes/model/dao/UsuarioDAO.class.php");
-                    require_once("classes/model/domain/Usuario.class.php");
-                    if(isset($_GET['parem']) && $_GET['parem']=="delete")
-                    {
-                        //var_dump($_GET);
-                        $id=$_GET['idUsuario'];
-                        $usuario = new Usuario();
-                        $usuario->idUsuario = $id;
-                        //var_dump($usuario);
-                        $dao = new UsuarioDAO();
-                        if($dao->excluir($usuario))
-                            echo "
-                            <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                            Registro <strong>excluído</strong> com sucesso.
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>";
-                        else 
-                            echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                            <strong>Registro não excluído.</strong> Há dados vinculados a essa instituição! 
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>";
-                        }
-
-                ?> 
+                        if(isset($_GET['parem']) && $_GET['parem']=="delete")
+                        {
+                            //var_dump($_GET);
+                            $id=$_GET['idUsuario'];
+                            $usuario = new Usuario();
+                            $usuario->idUsuario = $id;
+                            //var_dump($usuario);
+                            $dao = new UsuarioDAO();
+                            if($dao->excluir($usuario))
+                                echo "
+                                <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
+                                Registro <strong>excluído</strong> com sucesso.
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>";
+                            else 
+                                echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
+                                <strong>Registro não excluído.</strong> 
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>";
+                            }
+                        ?> 
                         <table class="table mt-4">
                             <thead>
                                 <tr>
@@ -192,9 +188,6 @@
                             </thead>
                             <tbody>
                             <?php
-                            require_once("classes/config/Conexao.class.php");
-                            require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
-                            require_once("classes/model/dao/UsuarioDAO.class.php");
 
                             function getIEName($idInstituicaoEnsino) {
                                 $IEdao = new InstituicaoDeEnsinoDAO();
