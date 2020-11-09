@@ -56,39 +56,47 @@
   <scrip src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></scrip>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"></script>
   <script>
     $(document).ready(function() {
-      $('#tblCategorias').DataTable({
-        "oLanguage": {
-            "sEmptyTable": "Nenhum registro encontrado",
-            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-            "sInfoPostFix": "",
-            "sInfoThousands": ".",
-            "sLengthMenu": "_MENU_ resultados por página",
-            "sLoadingRecords": "Carregando...",
-            "sProcessing": "Processando...",
-            "sZeroRecords": "Nenhum registro encontrado",
-            "sSearch": "Pesquisar",
-            "oPaginate": {
-              "sNext": "Próximo",
-              "sPrevious": "Anterior",
-              "sFirst": "Primeiro",
-              "sLast": "Último"
-            }​​,
-            "oAria": {
-              "sSortAscending": ": Ordenar colunas de forma ascendente",
-              "sSortDescending": ": Ordenar colunas de forma descendente"
-            }​​,
-            "select": {
-              "rows": {
-                "_": "Selecionado %d linhas",
-                "0": "Nenhuma linha selecionada",
-                "1": "Selecionado 1 linha"
-              }​​
-            }​​
-          }
+      $('#tblCategorias').DataTable({language: {
+                            "sEmptyTable": "Nenhum registro encontrado",
+                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sInfoThousands": ".",
+                            "sLengthMenu": "_MENU_ resultados por página",
+                            "sLoadingRecords": "Carregando...",
+                            "sProcessing": "Processando...",
+                            "sZeroRecords": "Nenhum registro encontrado",
+                            "sSearch": "Pesquisar",
+                            "oPaginate": {
+                                "sNext": "Próximo",
+                                "sPrevious": "Anterior",
+                                "sFirst": "Primeiro",
+                                "sLast": "Último"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                "sSortDescending": ": Ordenar colunas de forma descendente"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "Selecionado %d linhas",
+                                    "0": "Nenhuma linha selecionada",
+                                    "1": "Selecionado 1 linha"
+                                }
+                            },
+                            "buttons": {
+                                "copy": "Copiar para a área de transferência",
+                                "copyTitle": "Cópia bem sucedida",
+                                "copySuccess": {
+                                    "1": "Uma linha copiada com sucesso",
+                                    "_": "%d linhas copiadas com sucesso"
+                                }
+                            }
+                        },
       });
     });
   </script>

@@ -20,6 +20,8 @@
         require_once("classes/model/domain/Participante.class.php");
     ?>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 
@@ -208,7 +210,7 @@
                         }
 
                 ?> 
-                        <table class="table mt-4">
+                        <table class="table mt-4" id="tParticipantes">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -274,6 +276,81 @@
                             </tbody>
                         </table>
                     </div>
+                    <script>
+                        $(document).ready(function() {
+                        var groupColumn = 4;
+                        var table = $('#tParticipantes').DataTable({ 
+                            language: {
+                            "sEmptyTable": "Nenhum registro encontrado",
+                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sInfoThousands": ".",
+                            "sLengthMenu": "_MENU_ resultados por página",
+                            "sLoadingRecords": "Carregando...",
+                            "sProcessing": "Processando...",
+                            "sZeroRecords": "Nenhum registro encontrado",
+                            "sSearch": "Pesquisar",
+                            "oPaginate": {
+                                "sNext": "Próximo",
+                                "sPrevious": "Anterior",
+                                "sFirst": "Primeiro",
+                                "sLast": "Último"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                "sSortDescending": ": Ordenar colunas de forma descendente"
+                            },
+                            "select": {
+                                "rows": {
+                                    "_": "Selecionado %d linhas",
+                                    "0": "Nenhuma linha selecionada",
+                                    "1": "Selecionado 1 linha"
+                                }
+                            },
+                            "buttons": {
+                                "copy": "Copiar para a área de transferência",
+                                "copyTitle": "Cópia bem sucedida",
+                                "copySuccess": {
+                                    "1": "Uma linha copiada com sucesso",
+                                    "_": "%d linhas copiadas com sucesso"
+                                }
+                            }
+                        },
+                            "columnDefs": [
+                                { "visible": false, "targets": groupColumn }
+                            ],
+                            "order": [[ groupColumn, 'asc' ]],
+                            "displayLength": 25,
+                            "drawCallback": function ( settings ) {
+                                var api = this.api();
+                                var rows = api.rows( {page:'current'} ).nodes();
+                                var last=null;
+                    
+                                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                                    if ( last !== group ) {
+                                        $(rows).eq( i ).before(
+                                            '<tr class="group bg-light"><td colspan="5">'+group+'</td></tr>'
+                                        );
+                    
+                                        last = group;
+                                    }
+                                } );
+                            }
+                        } );
+                    
+                        // Order by the grouping
+                        $('#tParticipantes tbody').on( 'click', 'tr.group', function () {
+                            var currentOrder = table.order()[0];
+                            if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+                                table.order( [ groupColumn, 'desc' ] ).draw();
+                            }
+                            else {
+                                table.order( [ groupColumn, 'asc' ] ).draw();
+                            }
+                        } );
+                    } );</script>
             </main>
             <?php require_once("template/footer.php"); ?>
         </div>
@@ -281,12 +358,15 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <!-- < src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
         $('.alert').alert()
+        
     </script>
+  <script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"></script>
+
 </body>
 
 </html>
