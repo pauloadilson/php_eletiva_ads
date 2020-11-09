@@ -14,6 +14,7 @@
     <?php
         require_once("classes/config/Conexao.class.php");
         require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
+        require_once("classes/model/dao/EstudoDAO.class.php");
         require_once("classes/model/dao/ParticipanteDAO.class.php");
         require_once("classes/model/domain/Participante.class.php");
     ?>
@@ -39,12 +40,33 @@
                                             <input type="text" class="form-control mb-2" id="nome" name="nome">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="telefone">Telefone:</label>
-                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone">
+                                            <label for="dataNascimento">Data de Nascimento:</label>
+                                            <input type="date" class="form-control mb-2" id="dataNascimento" name="dataNascimento">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="pais">País:</label>
                                             <input type="text" class="form-control mb-2" id="pais" name="pais">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="Estudos_idEstudo">Estudo:</label>
+                                            <select name="Estudos_idEstudo" class="form-control mb-2">
+                                                <?php
+                                                $dao = new EstudoDAO();
+                                                $estudos = $dao->consultar();
+                                                while ($linha = $estudos->fetch(PDO::FETCH_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $linha['idEstudo'] ?>"><?= $linha['titulo'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="grupo">Grupo:</label>
+                                            <select name="grupo" class="form-control mb-2">
+                                                    <option value="controle">Controle</option>
+                                                    <option value="experimental">Experimental</option>
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="InstituicoesEnsino_idInstituicaoEnsino">Instituição de Ensino:</label>
@@ -67,33 +89,26 @@
                                             </small>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="tipoDoc">Tipo de Documento:</label>
-                                            <input type="text" class="form-control mb-2" id="tipoDoc" name="tipoDoc">
+                                            <label for="primeiroResponsavel">Primeiro Responsável</label>
+                                            <input type="text" class="form-control mb-2" id="primeiroResponsavel" name="primeiroResponsavel">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="numeroDoc">Número do Documento:</label>
-                                            <input type="text" class="form-control mb-2" id="numeroDoc" name="numeroDoc">
+                                            <label for="segundoResponsavel">Segundo Responsável:</label>
+                                            <input type="text" class="form-control mb-2" id="segundoResponsavel" name="segundoResponsavel">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="email">E-mail:</label>
-                                            <input type="email" class="form-control mb-2" id="email" name="email">
+                                            <label for="telefone">Telefone:</label>
+                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="senhaAcesso">Senha:</label>
-                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="tipoUsuario">Tipo de Usuário:</label>
-                                            <input type="text" class="form-control mb-2" id="tipoUsuario" name="tipoUsuario">
-                                        </div>
-                                        <button class="btn btn-primary ml-3" type="submit" name="btnIncUser">Incluir Usuário</button>
+                                       
+                                        <button class="btn btn-primary ml-3" type="submit" name="btnIncSub">Incluir Usuário</button>
                                     </div>
                                     </form>
                                     
                                 </div>
                             </div>
                             <?php
-                            if (isset($_POST["btnIncUser"])) {
+                            if (isset($_POST["btnIncSub"])) {
                                 $_GET = array();
                                 //var_dump($_POST);
 
@@ -117,7 +132,12 @@
                                         </button>
                                         </div>";
                                 else
-                                    echo "Erro ao inserir dado!";
+                                echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
+                                <strong>Erro</strong> ao incluir participante! 
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>";
 
                                 $_POST = array();
                                 //var_dump($_POST);
@@ -129,12 +149,12 @@
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
                         //var_dump($_GET);
-                        $id=$_GET['idUsuario'];
-                        $usuario = new Usuario();
-                        $usuario->idUsuario = $id;
-                        //var_dump($usuario);
-                        $dao = new UsuarioDAO();
-                        if($dao->excluir($usuario))
+                        $id=$_GET['idParticipante'];
+                        $participante = new Participante();
+                        $participante->idparticipante = $id;
+                        //var_dump($participante);
+                        $dao = new ParticipanteDAO();
+                        if($dao->excluir($participante))
                             echo "
                             <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
                             Registro <strong>excluído</strong> com sucesso.
@@ -144,7 +164,7 @@
                         </div>";
                         else 
                             echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                            <strong>Registro não excluído.</strong> Há dados vinculados a essa instituição! 
+                            <strong>Registro não excluído.</strong> 
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                             <span aria-hidden='true'>&times;</span>
                             </button>
@@ -157,9 +177,14 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome</th>
-                                    <th>Telefone</th>
-                                    <th>E-mail</th>
+                                    <th>Data de Nascimento</th>
+                                    <th>País</th>
+                                    <th>Estudo</th>
+                                    <th>Grupo</th>
                                     <th>Instituição de Ensino</th>
+                                    <th>Primeiro Responsável</th>
+                                    <th>Segundo Responsável</th>
+                                    <th>Telefone</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -172,22 +197,33 @@
                                 //var_dump($nomeInstituicao);
                                 return $nomeInstituicao;
                             }
+                            function getEstudoTitulo($idEstudo) {
+                                $IEdao = new EstudoDAO();
+                                $tituloEstudo = $IEdao->consultarTituloPeloId($idEstudo);
+                                //var_dump($nomeInstituicao);
+                                return $tituloEstudo;
+                            }
                             
                             
-                            $UserDao = new UsuarioDAO();
-                            $usuarios = $UserDao->consultar();
-                            while ($linha = $usuarios->fetch(PDO::FETCH_ASSOC)) {
+                            $UserDao = new ParticipanteDAO();
+                            $participantes = $UserDao->consultar();
+                            while ($linha = $participantes->fetch(PDO::FETCH_ASSOC)) {
                                 // var_dump($linha);
                             ?>
-                                <tr key="<?= $linha['idUsuario'] ?>">
-                                    <td><?= $linha['idUsuario'] ?></td>
+                                <tr key="<?= $linha['idParticipante'] ?>">
+                                    <td><?= $linha['idParticipante'] ?></td>
                                     <td><?= $linha['nome'] ?></td>
+                                    <td><?= $linha['dataNascimento'] ?></td>
+                                    <td><?= $linha['pais'] ?></td>
+                                    <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
+                                    <td><?= $linha['grupo'] ?></td>
+                                    <td><?= $linha['primeiroResponsavel'] ?></td>
+                                    <td><?= $linha['segundoResponsavel'] ?></td>
                                     <td><?= $linha['telefone'] ?></td>
-                                    <td><?= $linha['email'] ?></td>
                                     <td><?= getIEName($linha['InstituicoesEnsino_idInstituicaoEnsino']) ?></td>
                                     <td>
-                                        <a href="user_alter.php?idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-warning icon-pencil"></a>
-                                        <a href="user.php?parem=delete&amp;idUsuario=<?= $linha['idUsuario'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
+                                        <a href="subject_alter.php?idParticipante=<?= $linha['idParticipante'] ?>" class="btn btn-warning icon-pencil"></a>
+                                        <a href="subject.php?parem=delete&amp;idParticipante=<?= $linha['idParticipante'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                     </td>
                                 </tr>
                             <?php
