@@ -1,3 +1,5 @@
+<?php require_once("controleAcesso.php"); ?>
+
 <!doctype html>
 <html lang="pt-BR">
 
@@ -21,7 +23,7 @@
     ?>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 
@@ -210,7 +212,7 @@
                         }
 
                 ?> 
-                        <table class="table mt-4" id="tParticipantes">
+                        <table class="table nowrap w-100" id="tParticipantes">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -280,6 +282,7 @@
                         $(document).ready(function() {
                         var groupColumn = 4;
                         var table = $('#tParticipantes').DataTable({ 
+                            "scrollX": true,
                             language: {
                             "sEmptyTable": "Nenhum registro encontrado",
                             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -331,7 +334,7 @@
                                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                                     if ( last !== group ) {
                                         $(rows).eq( i ).before(
-                                            '<tr class="group bg-light"><td colspan="5">'+group+'</td></tr>'
+                                            '<tr class="group bg-light"><td colspan="10">'+group+'</td></tr>'
                                         );
                     
                                         last = group;

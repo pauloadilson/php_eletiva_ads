@@ -1,3 +1,5 @@
+<?php require_once("controleAcesso.php"); ?>
+
 <!doctype html>
 <html lang="pt-BR">
 
@@ -34,7 +36,7 @@
                         <div class="card card-body">
 
                             <?php
-                            session_start();
+                            //session_start();
                             //var_dump($_GET);
                             if (!isset($_POST['btnAltSub'])) {
                                 $id = $_GET['idParticipante'];
@@ -102,13 +104,19 @@
                                             <?php
                                                 $dao = new GrupoDAO();
                                                 $grupos = $dao->consultar();
-                                                
+                                                var_dump($resultado['Estudos_idEstudo']);
                                                 while ($linha = $grupos->fetch(PDO::FETCH_ASSOC)) {
-                                                    //var_dump($linha['Estudos_idEstudo']);
+                                                    var_dump($linha['Estudos_idEstudo']);
                                                     if ($linha['Estudos_idEstudo'] == $resultado['Estudos_idEstudo']) {
+                                                        if ($linha['idGrupo'] == $resultado['Grupos_idGrupo']) {
+                                                            ?>
+                                                            <option value="<?= $linha['idGrupo'] ?>" selected><?= $linha['nome'] ?></option>
+                                                    <?php   
+                                                        } else{
                                                     ?>
                                                         <option value="<?= $linha['idGrupo'] ?>"><?= $linha['nome'] ?></option>
                                                 <?php
+                                                        }
                                                     }
                                                 }
                                                 ?>

@@ -1,3 +1,4 @@
+<?php require_once("controleAcesso.php"); ?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -20,9 +21,10 @@
         <main class="content" >
             <div class="container-fluid ">
                 <div class="p-3 mt-3">
-                    <div class='display-4'>Bem Vindo!</div>
+                    <div class='display-4'>Bem Vindo(a) <u><?= $_SESSION['usuario']['nome']?></u> !</div>
                     <hr />
-                    <p class="mb-0">Teste </p>
+                    <p class="mb-0"><?= var_dump($_SESSION['usuario'])?> <br>
+                </p>
                 </div>
             </div>
         </main>

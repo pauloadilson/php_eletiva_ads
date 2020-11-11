@@ -1,3 +1,4 @@
+<?php require_once("controleAcesso.php"); ?>
 <?php
     require_once("classes/config/Conexao.class.php");
     require_once("classes/model/dao/GrupoDAO.class.php");

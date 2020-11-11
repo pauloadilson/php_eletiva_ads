@@ -1,3 +1,5 @@
+<?php require_once("controleAcesso.php"); ?>
+
 <!doctype html>
 <html lang="pt-BR">
 
@@ -32,7 +34,7 @@
                         <div class="card card-body">
 
                             <?php
-                            session_start();
+                            //session_start();
                             //var_dump($_GET);
                             if (!isset($_POST['btnAltIE'])) {
                                 $id = $_GET['idInstituicaoEnsino'];

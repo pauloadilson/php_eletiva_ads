@@ -1,3 +1,4 @@
+<?php  require_once("controleAcesso.php"); ?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -34,7 +35,7 @@
                         <div class="card card-body">
 
                             <?php
-                            session_start();
+                            //session_start();
                             //var_dump($_GET);
                             if (!isset($_POST['btnAltUser'])) {
                                 $id = $_GET['idUsuario'];
@@ -44,7 +45,7 @@
                                 //var_dump($resultado);
 
                                 if ($resultado != 0) {
-                                    $_SESSION['idUsuario'] = $id;
+                                    $_SESSION['idUsuarioAlteracao'] = $id;
                                     ?>
                                                                     <form action="" method="post">
                                     <div class="row">
@@ -105,7 +106,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="senhaAcesso">Senha:</label>
-                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso" value="<?= $resultado['senhaAcesso'] ?>">
+                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="TipoDeUsuario_idTipoUsuario">Tipo de Usuário:</label>
@@ -138,7 +139,7 @@
                                 }
                             } else {
                                 $usuario = new Usuario();
-                                $usuario->idUsuario =  $_SESSION['idUsuario'];
+                                $usuario->idUsuario = $_SESSION['idUsuarioAlteracao'];
                                 $usuario->nome = $_POST['nome'];
                                 $usuario->telefone = $_POST['telefone'];
                                 $usuario->pais = $_POST['pais'];
@@ -146,15 +147,25 @@
                                 $usuario->tipoDoc = $_POST['tipoDoc'];
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
-                                $usuario->senhaAcesso = $_POST['senhaAcesso'];
                                 $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
-                                // var_dump($usuario);
-
-
-    
+                                
+                                $succeded = false;
                                 $dao = new UsuarioDAO();
+                                if (empty($_POST['senhaAcesso'])){
+                                    $succeded = ($dao->alterarSemSenha($usuario));
+                                } else {
+                                    $pepper = "c1isvFdxMDdmjOlvxpecFw";
+                                    
+                                    $pwd = $_POST['senhaAcesso'];
+                                    $pwd_peppered = hash_hmac("sha256", $pwd, $pepper);
+                                    $pwd_hashed = password_hash($pwd_peppered, PASSWORD_ARGON2I);
+
+                                    $usuario->senhaAcesso = $pwd_hashed;
+                                    $succeded = ($dao->alterarComSenha($usuario));
+                                }
+    
                                 // var_dump($dao->alterar($usuario));
-                                if ($dao->alterar($usuario))
+                                if ($succeded)
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
                                         Registro de usuário alterado com sucesso! <a href='user.php'class='alert-link' >Retornar.</a>
                                         <button  type='button' class='close' data-dismiss='alert' aria-label='Close'>

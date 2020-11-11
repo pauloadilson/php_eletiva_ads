@@ -1,3 +1,8 @@
+<?php  require_once("controleAcesso.php");
+if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
+    header('Location: index.php'); 
+}
+?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -104,7 +109,8 @@
                                                 }
                                             }
                                                 ?>
-                                            </select>                                        </div>
+                                            </select>                                        
+                                        </div>
                                         <button class="btn btn-primary ml-3" type="submit" name="btnIncUser">Incluir Usuário</button>
                                     </div>
                                     </form>
@@ -115,6 +121,11 @@
                             if (isset($_POST["btnIncUser"])) {
                                 $_GET = array();
                                 //var_dump($_POST);
+                                $pepper = "c1isvFdxMDdmjOlvxpecFw";
+                    
+                                $pwd = $_POST['senhaAcesso'];
+                                $pwd_peppered = hash_hmac("sha256", $pwd, $pepper);
+                                $pwd_hashed = password_hash($pwd_peppered, PASSWORD_ARGON2I);
 
                                 $usuario = new Usuario();
                                 $usuario->nome = $_POST['nome'];
@@ -124,7 +135,7 @@
                                 $usuario->tipoDoc = $_POST['tipoDoc'];
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
-                                $usuario->senhaAcesso = $_POST['senhaAcesso'];
+                                $usuario->senhaAcesso = $pwd_hashed;
                                 $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
                                 //var_dump($usuario);
 
@@ -177,7 +188,7 @@
                             </div>";
                             }
                         ?> 
-                        <table class="table mt-4" id="tUsuarios">
+                        <table class="table nowrap w-100" id="tUsuarios">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -284,7 +295,7 @@
                                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                                     if ( last !== group ) {
                                         $(rows).eq( i ).before(
-                                            '<tr class="group bg-light"><td colspan="5">'+group+'</td></tr>'
+                                            '<tr class="group bg-light"><td colspan="6">'+group+'</td></tr>'
                                         );
                     
                                         last = group;
