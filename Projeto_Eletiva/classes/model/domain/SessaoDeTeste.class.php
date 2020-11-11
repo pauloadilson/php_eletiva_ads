@@ -1,11 +1,13 @@
 <?php 
 class SessaoDeTeste {
     private $anoEscolar;
-    private $idade_participante;
+    private $data;
+    private $idadeParticipante;
     private $numeroSessao;
     private $Usuarios_idUsuario;
-    private $Participantes_idParticipantes;
-    private $idSessaoAnterior;
+    private $Participantes_idParticipante;
+    private $Estudos_idEstudo;
+    //private $idSessaoAnterior;
     
     public function __set($atrib , $value){  
         return $this->$atrib = $value;

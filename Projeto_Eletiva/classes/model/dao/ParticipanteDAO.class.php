@@ -79,4 +79,16 @@ class ParticipanteDAO {
             return 0;
         }     
      }
+     public function consultarNomePeloId($idParticipante){
+        $this->sql = "SELECT nome from participantes where idParticipante = :idParticipante";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql);
+            $executar->bindValue(":idParticipante", $idParticipante);
+            $executar->execute();
+            return $executar->fetch()['nome'];
+        } catch (Exception $e) {
+            return 0;
+        }     
+     }
 }

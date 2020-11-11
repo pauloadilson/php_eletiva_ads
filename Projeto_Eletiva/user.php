@@ -67,7 +67,7 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                                                 ?>
                                                     <option value="<?= $linha['idInstituicaoEnsino'] ?>"><?= $linha['nome'] ?></option>
                                                 <?php
-                                                }
+                                                     }
                                                 }
                                                 ?>
                                             </select>

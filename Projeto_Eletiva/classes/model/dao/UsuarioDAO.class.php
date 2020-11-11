@@ -49,14 +49,14 @@ class UsuarioDAO {
             return 0;
         }     
      }
-     public function consultarSenhaPeloEmail2($email){
-        $this->sql = "SELECT senhaAcesso from usuarios where email = :email";
+     public function consultarNomePeloId($idUsuario){
+        $this->sql = "SELECT nome from usuarios where idUsuario = :idUsuario";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
-            $executar->bindValue(":email", $email);
+            $executar->bindValue(":idUsuario", $idUsuario);
             $executar->execute();
-            return $executar->fetch();
+            return $executar->fetch()['nome'];
         } catch (Exception $e) {
             return 0;
         }     
