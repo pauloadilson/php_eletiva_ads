@@ -221,10 +221,10 @@
                                     <th>País</th>
                                     <th>Estudo</th>
                                     <th>Grupo</th>
-                                    <th>Instituição de Ensino</th>
                                     <th>Primeiro Responsável</th>
                                     <th>Segundo Responsável</th>
                                     <th>Telefone</th>
+                                    <th>Escola</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -259,7 +259,7 @@
                                 <tr key="<?= $linha['idParticipante'] ?>">
                                     <td><?= $linha['idParticipante'] ?></td>
                                     <td><?= $linha['nome'] ?></td>
-                                    <td><?= $linha['dataNascimento'] ?></td>
+                                    <td><?= date("d-m-Y", strtotime(($linha['dataNascimento']))) ?></td>
                                     <td><?= $linha['pais'] ?></td>
                                     <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
                                     <td><?= getGroupName($linha['Grupos_idGrupo'],$linha['Estudos_idEstudo']) ?></td>
@@ -322,7 +322,7 @@
                             }
                         },
                             "columnDefs": [
-                                { "visible": false, "targets": groupColumn }
+                                { "visible": false, "targets": groupColumn },
                             ],
                             "order": [[ groupColumn, 'asc' ]],
                             "displayLength": 25,

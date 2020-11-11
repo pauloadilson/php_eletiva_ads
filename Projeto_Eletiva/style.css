@@ -20,10 +20,11 @@
     margin: 0px;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: var(--header-height) var(--nav-height) 1fr var(--footer-height);
+    grid-template-rows: var(--header-height) var(--nav-height) auto var(--footer-height);
     grid-template-areas: "header" "menu" "content" "footer";
     height: 100vh;
     background-color: #F5F5F5;
+    font: -webkit-control;
 }
 
 .header {
@@ -45,9 +46,16 @@ nav.menu-area {
     box-shadow: var(--shadow);
 }
 
+div.dataTables_wrapper {
+    margin: 0 auto;
+    padding: 15px;
+}
+
 main.content {
     grid-area: content;
     padding: 0px 15px 0 15px;
+    width: 1315px;
+    margin: 0 auto;
 }
 
 main>div {
