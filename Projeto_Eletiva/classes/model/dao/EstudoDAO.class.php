@@ -54,6 +54,20 @@ class EstudoDAO {
             return 0;
         }     
      }
+     public function alterar($estudo){
+        $this->sql = "UPDATE estudos set titulo = :titulo, descricao = :descricao, Usuarios_idPesquisadorPrincipal = :Usuarios_idPesquisadorPrincipal  where idEstudo = :idEstudo";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql);
+            $executar->bindValue(":titulo", $estudo->titulo);
+            $executar->bindValue(":descricao", $estudo->descricao);
+            $executar->bindValue(":Usuarios_idPesquisadorPrincipal", $estudo->Usuarios_idPesquisadorPrincipal);
+            $executar->bindValue(":idEstudo", $estudo->idEstudo);
+            return $executar->execute();
+        } catch (Exception $e) {
+            return false;
+        }     
+     }
      public function excluir($estudo){
         $this->sql = "DELETE from estudos where idEstudo = :idEstudo";
         try {

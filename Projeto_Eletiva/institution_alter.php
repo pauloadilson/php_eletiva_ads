@@ -76,11 +76,11 @@
                                                 while ($linha = $categorias->fetch(PDO::FETCH_ASSOC)) {
                                                     //var_dump($linha);
                                                     //var_dump($resultado);
-                                                    if ($linha['id'] == $resultado['idTipoUsuario']) {?>
-                                                        <option value="<?= $linha['id'] ?>" selected><?= $linha['tipo'] ?></option>
+                                                    if ($linha['idTipoUsuario'] == $resultado['TipoDeUsuario_idTipoUsuario']) {?>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>" selected><?= $linha['tipoUsuario'] ?></option>
                                                     <?php 
                                                     } else {?>
-                                                        <option value="<?= $linha['id'] ?>"><?= $linha['tipo'] ?></option>
+                                                        <option value="<?= $linha['idTipoUsuario'] ?>"><?= $linha['tipoUsuario'] ?></option>
                                                 <?php 
                                                     }
                                                 }

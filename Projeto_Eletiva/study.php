@@ -101,7 +101,7 @@
                         ?>
                     </div>
 
-                    <hr>
+                    <hr class="m-0">
                     <?php
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
@@ -161,7 +161,7 @@
                                     <td><?= getUserName($linha['Usuarios_idPesquisadorPrincipal']) ?></td>
 
                                     <td>
-                                        <!-- <a href="institution_alter.php?parem=alter&amp;idInstituicaoEnsino=<?= $linha['idInstituicaoEnsino'] ?>" class="btn btn-warning icon-pencil"></a> -->
+                                        <a href="study_alter.php?parem=alter&amp;idEstudo=<?= $linha['idEstudo'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="study.php?parem=delete&amp;idEstudo=<?= $linha['idEstudo'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                     </td>
                                     

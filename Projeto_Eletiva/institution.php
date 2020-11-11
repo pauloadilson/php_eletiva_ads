@@ -106,7 +106,7 @@
                         ?>
                     </div>
 
-                    <hr>
+                    <hr class="m-0">
                     <?php
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
