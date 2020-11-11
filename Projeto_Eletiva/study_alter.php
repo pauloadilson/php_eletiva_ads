@@ -31,201 +31,92 @@
             <main class="content">
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
-                        <a class="btn btn-light" data-toggle="collapse" href="#inserirInstituicao" role="button" aria-expanded="false" aria-controls="inserirInstituicao">
-                            Novo Estudo
-                        </a>
-                        <div class="collapse mt-2" id="inserirInstituicao">
+                        <p class="h5 p-3">
+                            Alterar dados do Estudo
+                        </p>
                             <div class="card card-body">
-                                <form action="" method="post">
+                            <?php
+                            //session_start();
+                            //var_dump($_GET);
+                            if (!isset($_POST['btnAltEstudo'])) {
+                                $id = $_GET['idEstudo'];
+
+                                $dao = new EstudoDAO();
+                                $resultado = $dao->consultarId($id);
+                                //var_dump($resultado);
+
+                                if ($resultado != 0) {
+                                    $_SESSION['idEstudo'] = $id;
+                                    ?>
+                                    <form action="" method="post">
                                     <div class="row ">
                                         <div class="col">
                                             <label for="titulo" class="col-form-label " >Título do estudo:</label>
-                                            <input type="text" class="form-control mb-2" id="titulo" name="titulo" required>
+                                            <input type="text" class="form-control mb-2" id="titulo" name="titulo" required value="<?= $resultado['titulo'] ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <label for="descricao" class="col-form-label">Descrição:</label>
-                                            <textarea class="form-control" name="descricao"></textarea>
+                                            <textarea class="form-control" name="descricao" ><?= $resultado['descricao'] ?></textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col">
                                             <label for="Usuarios_idPesquisadorPrincipal" class="ccol-form-label">Pesquisador Principal:</label>
-                                            <select name="Usuarios_idPesquisadorPrincipal" class="form-control mb-2">
+                                            <select name="Usuarios_idPesquisadorPrincipal" class="form-control mb-2" >
                                             <?php
                                                 $dao = new UsuarioDAO();
                                                 $usuarios = $dao->consultar();
                                                 while ($linha = $usuarios->fetch(PDO::FETCH_ASSOC)) {
                                                     if($linha['TipoDeUsuario_idTipoUsuario'] == 1) {
+                                                        if ($linha['idUsuario'] == $resultado['Usuarios_idPesquisadorPrincipal']) {
+                                                            ?>
+                                                            <option value="<?= $linha['idUsuario'] ?>" selected><?= $linha['nome'] ?></option>
+                                                        <?php 
+                                                        } else {?>
                                                         ?>
                                                         <option value="<?= $linha['idUsuario'] ?>"><?= $linha['nome'] ?></option>
-                                                <?php 
+                                                    <?php 
+                                                        }
                                                     }
                                                 }
                                                 ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-25" type="submit" name="btnIncEst">Incluir Estudo</button>
-                                </form>
-                            </div>
-                        </div>
-                        <?php
-                        if (isset($_POST["btnIncEst"])) {
-                            $_GET = array();
-                            
-                            $estudo = new Estudo();
-                            $estudo->titulo = $_POST['titulo'];
-                            $estudo->descricao = $_POST['descricao'];
-                            $estudo->Usuarios_idPesquisadorPrincipal = $_POST['Usuarios_idPesquisadorPrincipal'];
-
-                            $estudoDAO = new EstudoDAO();
-                            if ($estudoDAO->inserir($estudo))
-                                echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                                        Inclusão realizada com sucesso.
-                                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <button class=" btn btn-primary w-25" type="submit" name="btnAltEstudo">Alterar Estudo</button>
+                                    </form>
+                            <?php
+                                }
+                            } else {
+                                $estudo = new Estudo();
+                                $estudo->idEstudo =  $_SESSION['idEstudo'];
+                                $estudo->titulo = $_POST['titulo'];
+                                $estudo->descricao = $_POST['descricao'];
+                                $estudo->Usuarios_idPesquisadorPrincipal = $_POST['Usuarios_idPesquisadorPrincipal'];
+                                //var_dump($estudo);
+    
+                                $estudoDAO = new EstudoDAO();
+                                if ($estudoDAO->alterar($estudo))
+                                    echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
+                                        Registro alterado com sucesso! <a href='study.php'class='alert-link' >Retornar.</a>
+                                        <button  type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                         <span aria-hidden='true'>&times;</span>
                                         </button>
                                     </div>";
-                            else
+                                else
                                 echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                                    <strong>Erro</strong> ao inserir instituição! 
-                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                    <span aria-hidden='true'>&times;</span>
-                                    </button>
-                                </div>";
-                            
-                        }
+                                <strong>Erro</strong> ao alterar estudo! 
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>";
+                            }
 
-                        ?>
+                            ?>
+                        </div>
                     </div>
-
-                    <hr>
-                    <?php
-                    if(isset($_GET['parem']) && $_GET['parem']=="delete")
-                    {
-                        //var_dump($_GET);
-                        $id=$_GET['idInstituicaoEnsino'];
-                        $instituicao = new InstituicaoDeEnsino();
-                        $instituicao->idInstituicaoEnsino = $id;
-                        //var_dump($instituicao);
-                        $dao = new InstituicaoDeEnsinoDAO();
-                        if($dao->excluir($instituicao))
-                            echo "
-                            <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                            Registro <strong>excluído</strong> com sucesso.
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>";
-                        else 
-                            echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                            <strong>Registro não excluído.</strong> Há participantes vinculados à essa instituição! 
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>";
-                        }
-
-                ?> 
-                    <table class="table nowrap w-100" id="tInstitution">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Titulo</th>
-                                <th>Descrição</th>
-                                <th>Pesquisador Principal</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-     
-                            function getUserName($idUsuario) {
-                                $usuarioDao = new UsuarioDAO();
-                                $nomeUsuario = $usuarioDao->consultarNomePeloId($idUsuario);
-                                //var_dump($tituloEstudo);
-                                return $nomeUsuario;
-                            }
-                            
-                            $dao = new EstudoDAO();
-                            $estudos = $dao->consultar();
-                            while ($linha = $estudos->fetch(PDO::FETCH_ASSOC)) {
-                                // var_dump($linha);
-                            ?>
-                                <tr key="<?= $linha['idEstudo'] ?>">
-                                    <td><?= $linha['idEstudo'] ?></td>
-                                    <td><?= $linha['titulo'] ?></td>
-                                    <td><?= $linha['descricao'] ?></td>
-                                    <td><?= getUserName($linha['Usuarios_idPesquisadorPrincipal']) ?></td>
-
-                                    <td>
-                                        <!-- <a href="institution_alter.php?parem=alter&amp;idInstituicaoEnsino=<?= $linha['idInstituicaoEnsino'] ?>" class="btn btn-warning icon-pencil"></a> -->
-                                        <a href="study.php?parem=delete&amp;idEstudo=<?= $linha['idEstudo'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
-                                    </td>
-                                    
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <script>
-                        $(document).ready(function() {
-                        var table = $('#tInstitution').DataTable({
-                            language: {
-                            "sEmptyTable": "Nenhum registro encontrado",
-                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                            "sInfoPostFix": "",
-                            "sInfoThousands": ".",
-                            "sLengthMenu": "_MENU_ resultados por página",
-                            "sLoadingRecords": "Carregando...",
-                            "sProcessing": "Processando...",
-                            "sZeroRecords": "Nenhum registro encontrado",
-                            "sSearch": "Pesquisar",
-                            "oPaginate": {
-                                "sNext": "Próximo",
-                                "sPrevious": "Anterior",
-                                "sFirst": "Primeiro",
-                                "sLast": "Último"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                                "sSortDescending": ": Ordenar colunas de forma descendente"
-                            },
-                            "select": {
-                                "rows": {
-                                    "_": "Selecionado %d linhas",
-                                    "0": "Nenhuma linha selecionada",
-                                    "1": "Selecionado 1 linha"
-                                }
-                            },
-                            "buttons": {
-                                "copy": "Copiar para a área de transferência",
-                                "copyTitle": "Cópia bem sucedida",
-                                "copySuccess": {
-                                    "1": "Uma linha copiada com sucesso",
-                                    "_": "%d linhas copiadas com sucesso"
-                                }
-                            }
-                        }
-                        } );
-                    
-                        // Order by the grouping
-                        $('#tInstitution tbody').on( 'click', 'tr.group', function () {
-                            var currentOrder = table.order()[0];
-                            if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
-                                table.order( [ groupColumn, 'desc' ] ).draw();
-                            }
-                            else {
-                                table.order( [ groupColumn, 'asc' ] ).draw();
-                            }
-                        } );
-                    } );</script>
-                    </script>
                 </div>
             </main>
             <?php require_once("template/footer.php"); ?>
