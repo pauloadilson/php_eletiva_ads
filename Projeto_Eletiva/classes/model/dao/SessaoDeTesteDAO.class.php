@@ -47,24 +47,6 @@ class SessaoDeTesteDAO {
             return 0;
         }     
      }
-     public function alterar($sessao){
-        $this->sql = "UPDATE sessaodeteste set anoEscolar=:anoEscolar,data=:data,idadeParticipante=:idadeParticipante, numeroSessao=:numeroSessao, Usuarios_idUsuario=:Usuarios_idUsuario,Participantes_idParticipantes=:Participantes_idParticipantes,Estudos_idEstudo=:Estudos_idEstudo where idSessaoTeste = :idSessaoTeste";
-        try {
-            $conexao = new Conexao();
-            $executar = $conexao->getCon()->prepare($this->sql);
-            $executar->bindValue(":anoEscolar", $sessao->anoEscolar);
-            $executar->bindValue(":data", $sessao->data);
-            $executar->bindValue(":idadeParticipante", $sessao->idadeParticipante);
-            $executar->bindValue(":numeroSessao", $sessao->numeroSessao);
-            $executar->bindValue(":Usuarios_idUsuario", $sessao->Usuarios_idUsuario);
-            $executar->bindValue(":Participantes_idParticipantes", $sessao->Participantes_idParticipantes);
-            $executar->bindValue(":Estudos_idEstudo", $sessao->Estudos_idEstudo);
-            $executar->bindValue(":idSessaoTeste", $sessao->idSessaoTeste);
-            return $executar->execute();
-        } catch (Exception $e) {
-            return 0;
-        }     
-     }
     public function excluir($sessao){
         $this->sql = "DELETE from sessaodeteste where idSessaoTeste = :idSessaoTeste";
         try {

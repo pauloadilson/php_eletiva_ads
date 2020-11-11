@@ -197,15 +197,15 @@
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
                         //var_dump($_GET);
-                        $id=$_GET['idParticipante'];
-                        $participante = new Participante();
-                        $participante->idParticipante = $id;
+                        $id=$_GET['idSessaoTeste'];
+                        $sessao = new SessaoDeTeste();
+                        $sessao->idSessaoTeste = $id;
                         //var_dump($participante);
-                        $dao = new ParticipanteDAO();
-                        if($dao->excluir($participante))
+                        $dao = new SessaoDeTesteDAO();
+                        if($dao->excluir($sessao))
                             echo "
                             <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                            Registro <strong>excluído</strong> com sucesso.
+                            Registro de sessão <strong>excluído</strong> com sucesso.
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                             <span aria-hidden='true'>&times;</span>
                             </button>
@@ -282,8 +282,7 @@
                                     <td><?= date("d-m-Y", strtotime(($linha['data']))) ?></td>
                                     <td><?= getUserName($linha['Usuarios_idUsuario']) ?></td>
                                     <td>
-<!--                                         <a href="subject_alter.php?idParticipante=<?= $linha['idParticipante'] ?>" class="btn btn-warning icon-pencil"></a>
-                                        <a href="subject.php?parem=delete&amp;idParticipante=<?= $linha['idParticipante'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a> -->
+                                        <a href="session.php?parem=delete&amp;idSessaoTeste=<?= $linha['idSessaoTeste'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                     </td>
                                 </tr>
                             <?php
