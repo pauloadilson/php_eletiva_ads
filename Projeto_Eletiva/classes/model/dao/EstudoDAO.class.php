@@ -3,6 +3,21 @@ class EstudoDAO {
 
     private $sql;
 
+    public function inserir($estudo)
+    {
+        $this->sql = "INSERT INTO estudos (titulo,descricao,Usuarios_idPesquisadorPrincipal) "
+        ."VALUES (:titulo, :descricao, :Usuarios_idPesquisadorPrincipal)";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql); // substituir parametros pelos valores a serm incluidos no BD
+            $executar->bindValue(":titulo", $estudo->titulo);
+            $executar->bindValue(":descricao", $estudo->descricao);
+            $executar->bindValue(":Usuarios_idPesquisadorPrincipal", $estudo->Usuarios_idPesquisadorPrincipal);
+            return $executar->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
     public function consultar() {
         $this->sql = "SELECT * FROM estudos";
         try {
@@ -39,7 +54,17 @@ class EstudoDAO {
             return 0;
         }     
      }
-
+     public function excluir($estudo){
+        $this->sql = "DELETE from estudos where idEstudo = :idEstudo";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql);
+            $executar->bindValue(":idEstudo", $estudo->idEstudo);
+            return $executar->execute(); 
+        } catch (Exception $e) {
+            return 0;
+        }     
+     }
 
 
 }

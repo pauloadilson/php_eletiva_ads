@@ -10,6 +10,9 @@
   <li class="nav-item">
     <a class="nav-link " id="pills-user-tab" href="user.php">Usuários</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link " id="pills-user-tab" href="study.php">Estudos</a>
+  </li>
   <?php
 }
   ?>
@@ -18,7 +21,7 @@
     <a class="nav-link " id="pills-subject-tab" href="subject.php"  >Participantes</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="pills-session-tab" href="session.php" >Sessão</a>
+    <a class="nav-link" id="pills-session-tab" href="session.php" >Sessões</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="pills-session-tab" href="institution.php" >Instituições de Ensino</a>
