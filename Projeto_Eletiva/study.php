@@ -106,12 +106,12 @@
                     if(isset($_GET['parem']) && $_GET['parem']=="delete")
                     {
                         //var_dump($_GET);
-                        $id=$_GET['idInstituicaoEnsino'];
-                        $instituicao = new InstituicaoDeEnsino();
-                        $instituicao->idInstituicaoEnsino = $id;
-                        //var_dump($instituicao);
-                        $dao = new InstituicaoDeEnsinoDAO();
-                        if($dao->excluir($instituicao))
+                        $id=$_GET['idEstudo'];
+                        $estudo = new Estudo();
+                        $estudo->idEstudo = $id;
+                        //var_dump($estudo);
+                        $dao = new EstudoDAO();
+                        if($dao->excluir($estudo))
                             echo "
                             <div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
                             Registro <strong>excluído</strong> com sucesso.
@@ -121,7 +121,7 @@
                         </div>";
                         else 
                             echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                            <strong>Registro não excluído.</strong> Há participantes vinculados à essa instituição! 
+                            <strong>Registro não excluído.</strong> Há participantes vinculados ao estudo! 
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                             <span aria-hidden='true'>&times;</span>
                             </button>
