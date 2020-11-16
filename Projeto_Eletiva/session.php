@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- jmask validação front end no JS -->
     <title>Sessões de Teste</title>
@@ -33,15 +33,15 @@
         <div class="app">
             <?php require_once("template/header.php"); ?>
             <?php require_once("template/menu.php"); ?>
-            <main class="content">
+            <main class="content p-3">
                 <div class="container-fluid ">
-                    <div class="p-3 mt-3">
+                    <div class="p-3">
                         <a class="btn btn-light" data-toggle="collapse" href="#inserirUsuario" role="button" aria-expanded="false" aria-controls="inserirUsuario">
                             Nova Sessão de Teste
                         </a>
                         <div class="collapse mt-2" id="inserirUsuario">
                             <div class="card card-body">
-                                <form action="" method="post">
+                                <form action="session_config.php" method="post">
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="Participantes_idParticipante">Participante:</label>
@@ -122,11 +122,9 @@
                                                     },
                                                     success: function (data) {
                                                         $('#Grupos_idGrupo').html(data);
-                                                        
                                                     },
                                                     error: function (data) {
                                                         $('#Grupos_idGrupo').html("Houve um erro ao carregar!");
-                                                        
                                                     },
                                                 })
                                                 });
@@ -140,7 +138,7 @@
                                             <label for="numeroSessao">Número da Sessão:</label>
                                             <input type="text" class="form-control mb-2" id="numeroSessao" name="numeroSessao">
                                         </div>
-                                        <button class="btn btn-primary ml-3" type="submit" name="btnIncSess">Incluir Sessão</button>
+                                        <button class="btn btn-primary ml-3" type="submit" name="btnInicSessao">Iniciar Sessão</button>
                                         
                                     </div>
                                     </form>
@@ -159,8 +157,8 @@
                             }
                             if (isset($_POST["btnIncSess"])) {
                                 $_GET = array();
-                                var_dump($_POST);
-                                var_dump($_SESSION);
+                                //var_dump($_POST);
+                                //var_dump($_SESSION);
 
                                 $sessao = new SessaoDeTeste();
                                 $sessao->Participantes_idParticipante = $_POST['Participantes_idParticipante'];
@@ -173,20 +171,25 @@
                                 $sessao->Usuarios_idUsuario = $_SESSION['usuario']['idUsuario'];
 
                                 $dao = new SessaoDeTesteDAO();
-                                if ($dao->inserir($sessao))
+                                $sessaoIniciada = $dao->iniciar($sessao);
+                                if ($sessaoIniciada) {
+                                    $_SESSION['sessao'] = $sessaoIniciada;
+                                    var_dump($_SESSION['sessao']);
+                                    $_SESSION['acesso'] = true;
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
-                                        Inclusão de sessão de teste realizada com sucesso.
-                                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                        <span aria-hidden='true'>&times;</span>
-                                        </button>
-                                        </div>";
-                                else
-                                echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
-                                <strong>Erro</strong> ao incluir sessão! 
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                <span aria-hidden='true'>&times;</span>
-                                </button>
-                            </div>";
+                                    Inclusão de sessão de teste realizada com sucesso.
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>";
+                                    header('Location: session_config.php');
+                                } else
+                                    echo "<div class='alert alert-danger fade show  alert-dismissible mt-2' role='alert'>
+                                    <strong>Erro</strong> ao iniciar sessão! 
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>";
 
                                 //var_dump($_POST);
                             } 
@@ -282,6 +285,7 @@
                                     <td><?= date("d-m-Y", strtotime(($linha['data']))) ?></td>
                                     <td><?= getUserName($linha['Usuarios_idUsuario']) ?></td>
                                     <td>
+                                        <a href="session.php?parem=report&amp;idSessaoTeste=<?= $linha['idSessaoTeste'] ?>" class="btn btn-info icon-file-text" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                         <a href="session.php?parem=delete&amp;idSessaoTeste=<?= $linha['idSessaoTeste'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                     </td>
                                 </tr>
