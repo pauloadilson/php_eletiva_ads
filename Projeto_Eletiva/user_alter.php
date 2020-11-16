@@ -15,7 +15,7 @@
     require_once("classes/config/Conexao.class.php");
     require_once("classes/model/dao/UsuarioDAO.class.php");
     require_once("classes/model/domain/Usuario.class.php");
-    require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
+    require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
     require_once("classes/model/dao/TipoDeUsuarioDAO.class.php");
 
     ?>
@@ -30,7 +30,7 @@
                 <div class="container-fluid ">
                     <div class="p-3 mt-3">
                         <p class="h5 p-3">
-                            Alteração dos dados de usuário 
+                            Alteração de dados do usuário 
                         </p>
                         <div class="card card-body">
 
@@ -66,13 +66,12 @@
                                             <select name="InstituicoesEnsino_idInstituicaoEnsino" class="form-control mb-2">
                                                 <?php
                                                 //require_once("classes/config/Conexao.class.php");
-                                                require_once("classes/model/dao/InstituicaoDeEnsinoDao.class.php");
                                                 $dao = new InstituicaoDeEnsinoDAO();
                                                 $instituicoes = $dao->consultar();
                                                 while ($linha = $instituicoes->fetch(PDO::FETCH_ASSOC)) {
                                                     //var_dump($linha);
                                                     //var_dump($resultado);
-                                                    if ($linha['idTipoUsuario'] != '4') {
+                                                    if ($linha['TipoDeUsuario_idTipoUsuario'] != '4') {
                                                     
                                                         if ($linha['idInstituicaoEnsino'] == $resultado['InstituicoesEnsino_idInstituicaoEnsino']) {?>
                                                             <option value="<?= $linha['idInstituicaoEnsino'] ?>" selected><?= $linha['nome'] ?></option>
@@ -183,9 +182,6 @@
 
                             ?>
                         </div>
-
-                        <hr>
-
 
                     </div>
             </main>

@@ -4,7 +4,7 @@ class Estudo {
     private $titulo;
     private $descricao;
     private $Usuarios_idPesquisadorPrincipal;
-    private $grupos = new ArrayObject();
+    //private $grupos = new ArrayObject();
 
     public function __set($atrib , $value){  
         return $this->$atrib = $value;

@@ -49,26 +49,26 @@
                                     <form action="" method="post">
                                         <div class="row ">
                                             <div class="col">
-                                                <label for="nomeInstituicao" class="col-form-label">Nome:</label>
-                                                <input type="text" class="form-control mb-2" id="nomeInstituicao" name="nomeInstituicao" value="<?= $resultado['nome'] ?>">
+                                                <label for="nome" class="col-form-label">Nome:</label>
+                                                <input type="text" class="form-control mb-2" id="nome" name="nome" value="<?= $resultado['nome'] ?>">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <label for="cidadeInstituicao" class="col-form-label">Cidade:</label>
-                                                <input type="text" class="form-control mb-2" id="cidadeInstituicao" name="cidadeInstituicao" value="<?= $resultado['cidade'] ?>">
+                                                <label for="cidade" class="col-form-label">Cidade:</label>
+                                                <input type="text" class="form-control mb-2" id="cidade" name="cidade" value="<?= $resultado['cidade'] ?>">
                                         </div>
                                     </div>
                                     <div class=" row">
                                                 <div class="col">
-                                                    <label for="paisInstituicao" class="ccol-form-label">País:</label>
-                                                    <input type="text" class="form-control mb-2" id="paisInstituicao" name="paisInstituicao" value="<?= $resultado['pais'] ?>">
+                                                    <label for="pais" class="ccol-form-label">País:</label>
+                                                    <input type="text" class="form-control mb-2" id="pais" name="pais" value="<?= $resultado['pais'] ?>">
                                         </div>
                                     </div>
                                     <div class=" row">
                                         <div class="col">
-                                            <label for="tipoDeUsuario" class="ccol-form-label">Tipo de Usuário:</label>
-                                            <select name="tipoDeUsuario" class="form-control mb-2">
+                                            <label for="TipoDeUsuario_idTipoUsuario" class="ccol-form-label">Tipo de Usuário:</label>
+                                            <select name="TipoDeUsuario_idTipoUsuario" class="form-control mb-2">
                                             <?php
                                                 require_once("classes/model/dao/TipoDeUsuarioDAO.class.php");
                                                 $dao = new TipoDeUsuarioDAO();
@@ -95,10 +95,10 @@
                             } else {
                                 $instituicao = new InstituicaoDeEnsino();
                                 $instituicao->idInstituicaoEnsino =  $_SESSION['idInstituicaoEnsino'];
-                                $instituicao->nome = $_POST['nomeInstituicao'];
-                                $instituicao->cidade = $_POST['cidadeInstituicao'];
-                                $instituicao->pais = $_POST['paisInstituicao'];
-                                $instituicao->idTipoUsuario = $_POST['tipoDeUsuario'];
+                                $instituicao->nome = $_POST['nome'];
+                                $instituicao->cidade = $_POST['cidade'];
+                                $instituicao->pais = $_POST['pais'];
+                                $instituicao->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
                                 //var_dump($instituicao);
     
                                 $instituicaoDAO = new InstituicaoDeEnsinoDAO();

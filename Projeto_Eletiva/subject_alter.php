@@ -141,7 +141,7 @@
                                     </form>
                                             <?php }
                             } else {
-                                var_dump($_POST);
+                                //var_dump($_POST);
                                 //var_dump($_SESSION['idParticipante']);
                                 $participante = new Participante();
                                 $participante->idParticipante = $_SESSION['idParticipante'];

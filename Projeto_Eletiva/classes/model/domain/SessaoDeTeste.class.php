@@ -1,11 +1,13 @@
 <?php 
 class SessaoDeTeste {
+    private $idSessaoTeste;
     private $anoEscolar;
     private $data;
     private $idadeParticipante;
     private $numeroSessao;
     private $Usuarios_idUsuario;
     private $Participantes_idParticipante;
+    private $Grupos_idGrupo;
     private $Estudos_idEstudo;
     //private $idSessaoAnterior;
     
