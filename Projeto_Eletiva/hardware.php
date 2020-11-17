@@ -17,14 +17,6 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
-    <style>
-        #div1 {
-        width: 200px;
-        height: 200px;
-        padding: 10px;
-        border: 1px solid #aaaaaa;
-        }
-    </style>
     <script>
         function allowDrop(ev) {
         ev.preventDefault();
@@ -49,50 +41,48 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
             <?php require_once("template/menu.php"); ?>
             <main class="content p-3">
                 <div class="p-3 mt-3">
-                            <p class="h5 p-3">
-                                Teste de hardware 
-                            </p>
-                            <div class="card card-body">
-                            <div class="row">
-                                    <div class="form-group col">
-                                        <form action="" class="form-inline ">
-                                            <label for="audio" class="col-md-2 d-block">Testar audio:</label>
-                                            <audio src="http://www.sousound.com/music/healing/healing_01.mp3" controls></audio>
-                                        </form>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="form-group col mt-3">
-                                    <form class="form-inline">
-                                        <div class="form-group col-md-2">
-                                            <label for="escala" class="d-block">Testar barra deslizante:</label>
-                                            </div>
-                                        <div class="form-group col-md-10">
-                                            <input type="range" class="form-control-range w-50" id="escala">
-                                        </div>
+                    <p class="h5 p-1">
+                        Teste de hardware 
+                    </p>
+                    <div class="card card-body p-1">
+                        <div class="row">
+                                <div class="form-group col">
+                                    <form action="" class="form-inline ">
+                                        <label for="audio" class="col-md-2 d-block">Testar audio:</label>
+                                        <audio src="http://www.sousound.com/music/healing/healing_01.mp3" controls></audio>
                                     </form>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="form-group col mt-3">
+                                <form class="form-inline">
+                                    <div class="form-group col-md-2">
+                                        <label for="escala" class="d-block">Testar barra deslizante:</label>
+                                        </div>
+                                    <div class="form-group col-md-10">
+                                        <input type="range" class="form-control-range w-50" id="escala">
                                     </div>
-                            </div>
-                            <div class="row">
-                                 <div class="form-group col mt-3">
-
+                                </form>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="form-group col mt-3">
                                     <form>
-                                    <label class="p-3" for="escala">Testar drag-and-drop</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <img id="drag1" src="pizza.png" draggable="true" ondragstart="drag(event)">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                                                </div>
+                                        <label class="p-3" for="escala">Testar drag-and-drop</label>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img id="drag1" src="pizza.png" draggable="true" ondragstart="drag(event)">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="dropBox" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                            </div>
                                         </div>
                                         <button class="btn btn-primary ml-3 col-md-2" onclick="window.location.reload();">Atualizar Página</button>
                                     </form>
-                                    </div>
-                            </div>
-                            </div>
+                                </div>
+                        </div>
                     </div>
-                </div>
+                </div>   
             </main>
             <?php require_once("template/footer.php"); ?>
         </div>
@@ -102,7 +92,6 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
-        $('.alert').alert()
     </script>
 </body>
 

@@ -84,6 +84,13 @@ footer.footer {
     }
 }
 
+.dropBox {
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+    border: 1px solid #aaaaaa;
+}
+
 
 /* @media(max-width: 573px) {
     .app {
