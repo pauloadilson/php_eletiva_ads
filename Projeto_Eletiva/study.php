@@ -249,6 +249,7 @@
                     </table>
                     <script>
                         $(document).ready(function() {
+                        var groupColumn = 3;
                         var table = $('#tInstitution').DataTable({
                             "scrollX": true,
                             language: {
@@ -288,7 +289,27 @@
                                     "_": "%d linhas copiadas com sucesso"
                                 }
                             }
-                        }
+                        },
+                        "columnDefs": [
+                                { "visible": false, "targets": groupColumn }
+                            ],
+                            "order": [[ groupColumn, 'asc' ]],
+                            "displayLength": 25,
+                            "drawCallback": function ( settings ) {
+                                var api = this.api();
+                                var rows = api.rows( {page:'current'} ).nodes();
+                                var last=null;
+                    
+                                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                                    if ( last !== group ) {
+                                        $(rows).eq( i ).before(
+                                            '<tr class="group bg-light"><td colspan="6">'+group+'</td></tr>'
+                                        );
+                    
+                                        last = group;
+                                    }
+                                } );
+                            }
                         } );
                     
                         // Order by the grouping
