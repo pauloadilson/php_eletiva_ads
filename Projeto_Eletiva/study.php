@@ -18,7 +18,9 @@
     require_once("classes/config/Conexao.class.php");
     require_once("classes/model/dao/EstudoDAO.class.php");
     require_once("classes/model/domain/Estudo.class.php");
+    require_once("classes/model/domain/Grupo.class.php");
     require_once("classes/model/dao/UsuarioDAO.class.php");
+    require_once("classes/model/dao/GrupoDAO.class.php");
 ?>
 
 </head>
@@ -67,6 +69,49 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row mt-2">
+                                    <div class="col">
+                                            <label for="descricao" class="col-form-label">Grupos:</label>
+                                            <div class="card card-body">    
+                                                <div class="wrapper">
+                                                    <div class="input-box mb-2 d-flex">
+                                                        <input type="text" class="form-control form-control-sm col-3 mr-2" name="nomeGrupos[]">
+                                                        <button class="btn  mb-1 btn-sm add-btn btn-outline-primary">Adicionar mais grupos</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                var maxGrupos = 10;
+                                                // initialize the counter for textbox
+                                                var grupo = 1;
+                                            
+                                                // handle click event on Add More button
+                                                $('.add-btn').click(function (e) {
+                                                e.preventDefault();
+                                                if (grupo < maxGrupos) { // validate the condition
+                                                    grupo++; // increment the counter
+                                                    $('.wrapper').append(`
+                                                    <div class="input-box mb-2 d-flex">
+                                                        <input type="text" class="form-control-sm form-control col-3 mr-2" name="nomeGrupos[]">
+                                                        <a href="#" class="remove-lnk btn btn-sm mb-1 btn-outline-danger">Remover grupo</a>
+                                                    </div>
+                                                    `);
+                                                }
+                                                });
+                                            
+                                                // handle click event of the remove link
+                                                $('.wrapper').on("click", ".remove-lnk", function (e) {
+                                                e.preventDefault();
+                                                $(this).parent('div').remove();  // remove input field
+                                                grupo--; // decrement the counter
+                                                })
+                                            
+                                            });
+                                            </script>
+                                    </div>
                                     <button class="btn btn-primary w-25" type="submit" name="btnIncEst">Incluir Estudo</button>
                                 </form>
                             </div>
@@ -79,6 +124,13 @@
                             $estudo->titulo = $_POST['titulo'];
                             $estudo->descricao = $_POST['descricao'];
                             $estudo->Usuarios_idPesquisadorPrincipal = $_POST['Usuarios_idPesquisadorPrincipal'];
+                            if (isset($_POST["nomeGrupos"]) && is_array($_POST["nomeGrupos"])){ 
+                                $nomeGrupos = $_POST["nomeGrupos"]; 
+                                foreach($nomeGrupos as $nomeGrupo){
+                                    $grupo = new Grupo($nomeGrupo);
+                                    $estudo->addGroup($grupo);
+                                }
+                            } 
 
                             $estudoDAO = new EstudoDAO();
                             if ($estudoDAO->inserir($estudo))
@@ -95,7 +147,18 @@
                                     <span aria-hidden='true'>&times;</span>
                                     </button>
                                 </div>";
-                            
+
+                                if (isset($_POST["nomeGrupos"]) && is_array($_POST["nomeGrupos"])){ 
+                                    $ultimEstudo = $estudoDAO->consultarUltimo();
+                                    //var_dump($ultimEstudo);
+                                    $idUltimoEstudo = $ultimEstudo['idEstudo']; 
+                                    foreach($estudo->grupos as $grupo){
+                                        //var_dump($grupo);
+                                        $grupo->Estudos_idEstudo = $idUltimoEstudo;
+                                        $grupoDAO = new GrupoDAO();
+                                        $grupoDAO->inserir($grupo);
+                                    }
+                                } 
                         }
 
                         ?>
@@ -136,6 +199,7 @@
                                 <th>Titulo</th>
                                 <th>Descrição</th>
                                 <th>Pesquisador Principal</th>
+                                <th>Grupos</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -148,6 +212,18 @@
                                 //var_dump($tituloEstudo);
                                 return $nomeUsuario;
                             }
+                            function getGroupNames($idEstudo) {
+                                $grupoDao = new grupoDAO();
+                                $nomeGrupos = "";
+                                $grupos = $grupoDao->consultarGruposPeloIdEstudo($idEstudo);
+                                foreach ($grupos as $grupo) {
+                                    //var_dump($grupo);
+                                    $nome = $grupo['nome'];
+                                    $nomeGrupos .= $nome.", ";
+                                }
+                                //var_dump($tituloEstudo);
+                                return substr($nomeGrupos, 0,-2);
+                            }
                             
                             $dao = new EstudoDAO();
                             $estudos = $dao->consultar();
@@ -159,7 +235,7 @@
                                     <td><?= $linha['titulo'] ?></td>
                                     <td><?= $linha['descricao'] ?></td>
                                     <td><?= getUserName($linha['Usuarios_idPesquisadorPrincipal']) ?></td>
-
+                                    <td><?= getGroupNames($linha['idEstudo']) ?></td>
                                     <td>
                                         <a href="study_alter.php?parem=alter&amp;idEstudo=<?= $linha['idEstudo'] ?>" class="btn btn-warning icon-pencil"></a>
                                         <a href="study.php?parem=delete&amp;idEstudo=<?= $linha['idEstudo'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
@@ -174,6 +250,7 @@
                     <script>
                         $(document).ready(function() {
                         var table = $('#tInstitution').DataTable({
+                            "scrollX": true,
                             language: {
                             "sEmptyTable": "Nenhum registro encontrado",
                             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

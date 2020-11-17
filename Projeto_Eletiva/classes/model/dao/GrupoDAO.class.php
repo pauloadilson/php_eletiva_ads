@@ -2,7 +2,20 @@
 class GrupoDAO {
 
     private $sql;
-
+    public function inserir($grupo)
+    {
+        $this->sql = "INSERT INTO grupos (Estudos_idEstudo,nome) "
+        ."VALUES (:Estudos_idEstudo, :nome)";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql); // substituir parametros pelos valores a serm incluidos no BD
+            $executar->bindValue(":Estudos_idEstudo", $grupo->Estudos_idEstudo);
+            $executar->bindValue(":nome", $grupo->nome);
+            return $executar->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
     public function consultar() {
         $this->sql = "SELECT * FROM grupos";
         try {
@@ -34,7 +47,7 @@ class GrupoDAO {
             $executar = $conexao->getCon()->prepare($this->sql);
             $executar->bindValue(":Estudos_idEstudo", $Estudos_idEstudo);
             $executar->execute();
-            return $executar->fetchAll();
+            return $executar->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             return 0;
         }     

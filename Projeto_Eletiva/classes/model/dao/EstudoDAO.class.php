@@ -30,6 +30,19 @@ class EstudoDAO {
         }
 
     }
+    public function consultarUltimo() {
+        $this->sql = "SELECT * FROM estudos order by idEstudo desc limit 1;";
+        try {
+            $conexao = new Conexao();
+            $executar = $conexao->getCon()->prepare($this->sql);
+            $executar->execute();
+            return $executar->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Conexão não estabelecida";
+            return 0;
+        }
+
+    }
     public function consultarId($idEstudo){
         $this->sql = "SELECT * from estudos where idEstudo = :idEstudo";
         try {
