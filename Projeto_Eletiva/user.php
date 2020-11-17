@@ -295,7 +295,7 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                                     if ( last !== group ) {
                                         $(rows).eq( i ).before(
-                                            '<tr class="group bg-light"><td colspan="6">'+group+'</td></tr>'
+                                            '<tr class="group bg-light"><td colspan="6">Tipo de usuário: <i>'+group+'</i></td></tr>'
                                         );
                     
                                         last = group;

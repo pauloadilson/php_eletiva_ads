@@ -232,7 +232,7 @@
                                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                                     if ( last !== group ) {
                                         $(rows).eq( i ).before(
-                                            '<tr class="group bg-light"><td colspan="5">'+group+'</td></tr>'
+                                            '<tr class="group bg-light"><td colspan="5">Tipo de usuário: <i>'+group+'</i></td></tr>'
                                         );
                     
                                         last = group;
