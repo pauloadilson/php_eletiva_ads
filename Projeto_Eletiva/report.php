@@ -53,7 +53,7 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                         Relatório de Avaliação
                     </p>
                     <div class="card card-body">
-                        <embed src="report.pdf" type="application/pdf" width="100%" height="1200px" />
+                        <embed src="reports/report.pdf" type="application/pdf" width="100%" height="1200px" />
                     </div>
                 </div>
             </main>
