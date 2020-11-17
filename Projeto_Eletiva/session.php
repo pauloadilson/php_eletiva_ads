@@ -285,7 +285,7 @@
                                     <td><?= date("d-m-Y", strtotime(($linha['data']))) ?></td>
                                     <td><?= getUserName($linha['Usuarios_idUsuario']) ?></td>
                                     <td>
-                                        <a href="session.php?parem=report&amp;idSessaoTeste=<?= $linha['idSessaoTeste'] ?>" class="btn btn-info icon-file-text" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
+                                        <a href="report.php" class="btn btn-info icon-file-text"></a>
                                         <a href="session.php?parem=delete&amp;idSessaoTeste=<?= $linha['idSessaoTeste'] ?>" class="btn btn-danger icon-trash" onClick="javascript: return confirm('Confirma a exclusão?');"  ></a>
                                     </td>
                                 </tr>
