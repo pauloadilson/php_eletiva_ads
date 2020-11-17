@@ -104,9 +104,9 @@
                                             <?php
                                                 $dao = new GrupoDAO();
                                                 $grupos = $dao->consultar();
-                                                var_dump($resultado['Estudos_idEstudo']);
+                                                //var_dump($resultado['Estudos_idEstudo']);
                                                 while ($linha = $grupos->fetch(PDO::FETCH_ASSOC)) {
-                                                    var_dump($linha['Estudos_idEstudo']);
+                                                    //var_dump($linha['Estudos_idEstudo']);
                                                     if ($linha['Estudos_idEstudo'] == $resultado['Estudos_idEstudo']) {
                                                         if ($linha['idGrupo'] == $resultado['Grupos_idGrupo']) {
                                                             ?>

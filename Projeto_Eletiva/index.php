@@ -23,8 +23,9 @@
                 <div class="p-3 mt-3">
                     <div class='display-4'>Bem Vindo(a) <u><?= $_SESSION['usuario']['nome']?></u> !</div>
                     <hr />
-                    <p class="mb-0"><?= var_dump($_SESSION['usuario'])?> <br>
-                </p>
+                    <div class="card card-body text-center">
+                    <h3 class="mb-0">Este é um site desenvolvido como atividade avaliativa para a disciplina eletiva de Linguagem de Programação IV - INTERNET<br>
+                </h3></div>
                 </div>
             </div>
         </main>

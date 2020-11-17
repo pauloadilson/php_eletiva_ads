@@ -174,7 +174,7 @@
                                 $sessaoIniciada = $dao->iniciar($sessao);
                                 if ($sessaoIniciada) {
                                     $_SESSION['sessao'] = $sessaoIniciada;
-                                    var_dump($_SESSION['sessao']);
+                                    //var_dump($_SESSION['sessao']);
                                     $_SESSION['acesso'] = true;
                                     echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>
                                     Inclusão de sessão de teste realizada com sucesso.

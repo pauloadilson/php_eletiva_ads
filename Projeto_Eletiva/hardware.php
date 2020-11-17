@@ -56,12 +56,8 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                             <div class="row">
                                     <div class="form-group col">
                                         <form action="" class="form-inline ">
-                                            <label for="audio" class="col-md-2 d-block">Dispositivo de audio:</label>
-                                            
-                                            <select class="custom-select my-1 mr-sm-2 form-control col-md-5" id="inlineFormCustomSelectPref">
-                                                <option value="audio1">Alto-falantes (Realtek High Definition Audio(SST))</option>
-                                            </select>
-                                            <button class="btn btn-primary ml-3 col-md-2" type="submit" name="btnIncUser">Testar som</button>
+                                            <label for="audio" class="col-md-2 d-block">Testar audio:</label>
+                                            <audio src="http://www.sousound.com/music/healing/healing_01.mp3" controls></audio>
                                         </form>
                                     </div>
                             </div>
