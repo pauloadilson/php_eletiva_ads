@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="template/style.css">
     <!-- jmask validação front end no JS -->
     <title>Sessões de Teste</title>
     <style>
@@ -252,11 +252,8 @@
                                 //var_dump($tituloEstudo);
                                 return $tituloEstudo;
                             }
-                            function getGroupName($idParticipante,$idEstudo) {
+                            function getGroupName($idGrupo,$idEstudo) {
                                 $grupoDao = new GrupoDAO();
-                                $ParticipanteDao = new ParticipanteDAO();
-                                $participante = $ParticipanteDao->consultarId($idParticipante);
-                                $idGrupo = $participante['Grupos_idGrupo'];
                                 $nomeGrupo = $grupoDao->consultarNomeGrupo($idGrupo,$idEstudo);
                                 //var_dump($tituloEstudo);
                                 return $nomeGrupo;
@@ -272,7 +269,6 @@
                             $SessaoDao = new SessaoDeTesteDAO();
                             $participantes = $SessaoDao->consultar();
                             while ($linha = $participantes->fetch(PDO::FETCH_ASSOC)) {
-                                $idEstudo = $linha['Estudos_idEstudo'];
                             ?>
                                 <tr key="<?= $linha['idSessaoTeste'] ?>">
                                     <td><?= $linha['idSessaoTeste'] ?></td>
@@ -280,7 +276,7 @@
                                     <td><?= $linha['idadeParticipante'] ?></td>
                                     <td><?= $linha['anoEscolar'] ?></td>
                                     <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
-                                    <td><?= getGroupName($linha['Participantes_idParticipante'],$idEstudo) ?></td>
+                                    <td><?= getGroupName($linha['Grupos_idGrupo'],$linha['Estudos_idEstudo']) ?></td>
                                     <td><?= $linha['numeroSessao'] ?></td>
                                     <td><?= date("d-m-Y", strtotime(($linha['data']))) ?></td>
                                     <td><?= getUserName($linha['Usuarios_idUsuario']) ?></td>
