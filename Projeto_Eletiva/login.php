@@ -40,21 +40,21 @@
                     <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="senhaAcesso">Senha:</label>
-                    <input type="password" class="form-control" name="senhaAcesso" id="senhaAcesso" placeholder="senha">
+                    <label for="hashSenha">Senha:</label>
+                    <input type="password" class="form-control" name="hashSenha" id="hashSenha" placeholder="senha">
                 </div>
                 <input type="submit" class="btn btn-primary" value="Enviar">
             </form>
             <?php
                 function isValidPassword($pwd_peppered, $resultado) 
                 {
-                    $pwd_hashed = $resultado[0]['senhaAcesso'];
+                    $pwd_hashed = $resultado[0]['hashSenha'];
                     return password_verify($pwd_peppered, $pwd_hashed);
                 }
                 if ($_POST) {
                     $pepper = "c1isvFdxMDdmjOlvxpecFw";
                     
-                    $pwd = $_POST['senhaAcesso'];
+                    $pwd = $_POST['hashSenha'];
                     $pwd_peppered = hash_hmac("sha256", $pwd, $pepper);
                     //$pwd_hashed = password_hash($pwd_peppered, PASSWORD_ARGON2I);
 
@@ -66,7 +66,7 @@
                     $usuarioDAO = new UsuarioDAO();
                     $resultado = $usuarioDAO->buscaSenha($usuario);
                     //echo var_dump($pwd_peppered);
-                    //echo var_dump($resultado[0]['senhaAcesso']);
+                    //echo var_dump($resultado[0]['hashSenha']);
                     //echo var_dump(isValidPassword($pwd_peppered, $resultado));
                     if (count($resultado) == 1 && isValidPassword($pwd_peppered, $resultado)){
                         $usuarioValido = $usuarioDAO->acessar($usuario);

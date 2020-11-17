@@ -91,8 +91,8 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                                             <input type="email" class="form-control mb-2" id="email" name="email">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="senhaAcesso">Senha:</label>
-                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
+                                            <label for="hashSenha">Senha:</label>
+                                            <input type="password" class="form-control mb-2" id="hashSenha" name="hashSenha">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="TipoDeUsuario_idTipoUsuario">Tipo de Usuário:</label>
@@ -123,7 +123,7 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                                 //var_dump($_POST);
                                 $pepper = "c1isvFdxMDdmjOlvxpecFw";
                     
-                                $pwd = $_POST['senhaAcesso'];
+                                $pwd = $_POST['hashSenha'];
                                 $pwd_peppered = hash_hmac("sha256", $pwd, $pepper);
                                 $pwd_hashed = password_hash($pwd_peppered, PASSWORD_ARGON2I);
 
@@ -135,7 +135,7 @@ if ($_SESSION['usuario']['TipoDeUsuario_idTipoUsuario'] != 1){
                                 $usuario->tipoDoc = $_POST['tipoDoc'];
                                 $usuario->numeroDoc = $_POST['numeroDoc'];
                                 $usuario->email = $_POST['email'];
-                                $usuario->senhaAcesso = $pwd_hashed;
+                                $usuario->hashSenha = $pwd_hashed;
                                 $usuario->TipoDeUsuario_idTipoUsuario = $_POST['TipoDeUsuario_idTipoUsuario'];
                                 //var_dump($usuario);
 

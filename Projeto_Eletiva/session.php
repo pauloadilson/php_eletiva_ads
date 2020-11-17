@@ -272,14 +272,14 @@
                             $SessaoDao = new SessaoDeTesteDAO();
                             $participantes = $SessaoDao->consultar();
                             while ($linha = $participantes->fetch(PDO::FETCH_ASSOC)) {
-                                $idEstudo = $linha['Estudos_IdEstudo'];
+                                $idEstudo = $linha['Estudos_idEstudo'];
                             ?>
                                 <tr key="<?= $linha['idSessaoTeste'] ?>">
                                     <td><?= $linha['idSessaoTeste'] ?></td>
                                     <td><?= getParticipanteNome($linha['Participantes_idParticipante']) ?></td>
                                     <td><?= $linha['idadeParticipante'] ?></td>
                                     <td><?= $linha['anoEscolar'] ?></td>
-                                    <td><?= getEstudoTitulo($linha['Estudos_IdEstudo']) ?></td>
+                                    <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
                                     <td><?= getGroupName($linha['Participantes_idParticipante'],$idEstudo) ?></td>
                                     <td><?= $linha['numeroSessao'] ?></td>
                                     <td><?= date("d-m-Y", strtotime(($linha['data']))) ?></td>

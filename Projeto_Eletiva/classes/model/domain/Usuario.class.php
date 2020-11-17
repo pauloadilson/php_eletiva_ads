@@ -5,7 +5,7 @@ class Usuario {
     private $pais;
     private $email;
     private $idTipoUsuario;
-    private $senhaAcesso;
+    private $hashSenha;
     private $telefone;
     private $tipoDoc;
     private $numeroDoc;

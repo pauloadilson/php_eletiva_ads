@@ -5,8 +5,8 @@ class UsuarioDAO {
 
     public function inserir($usuario)
     {
-        $this->sql = "INSERT INTO usuarios (InstituicoesEnsino_idInstituicaoEnsino, nome, pais, email, TipoDeUsuario_idTipoUsuario, senhaAcesso, telefone, tipoDoc, numeroDoc) "
-        ."VALUES (:InstituicoesEnsino_idInstituicaoEnsino, :nome, :pais, :email, :TipoDeUsuario_idTipoUsuario, :senhaAcesso, :telefone, :tipoDoc, :numeroDoc)";
+        $this->sql = "INSERT INTO usuarios (InstituicoesEnsino_idInstituicaoEnsino, nome, pais, email, TipoDeUsuario_idTipoUsuario, hashSenha, telefone, tipoDoc, numeroDoc) "
+        ."VALUES (:InstituicoesEnsino_idInstituicaoEnsino, :nome, :pais, :email, :TipoDeUsuario_idTipoUsuario, :hashSenha, :telefone, :tipoDoc, :numeroDoc)";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql); // substituir parametros pelos valores a serm incluidos no BD
@@ -15,7 +15,7 @@ class UsuarioDAO {
             $executar->bindValue(":pais", $usuario->pais);
             $executar->bindValue(":email", $usuario->email);
             $executar->bindValue(":TipoDeUsuario_idTipoUsuario", $usuario->TipoDeUsuario_idTipoUsuario);
-            $executar->bindValue(":senhaAcesso", $usuario->senhaAcesso);
+            $executar->bindValue(":hashSenha", $usuario->hashSenha);
             $executar->bindValue(":telefone", $usuario->telefone);
             $executar->bindValue(":tipoDoc", $usuario->tipoDoc);
             $executar->bindValue(":numeroDoc", $usuario->numeroDoc);
@@ -62,19 +62,19 @@ class UsuarioDAO {
         }     
      }
      public function consultarSenhaPeloEmail($email){
-        $this->sql = "SELECT senhaAcesso from usuarios where email = :email";
+        $this->sql = "SELECT hashSenha from usuarios where email = :email";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
             $executar->bindValue(":email", $email);
             $executar->execute();
-            return $executar->fetch()['senhaAcesso'];
+            return $executar->fetch()['hashSenha'];
         } catch (Exception $e) {
             return 0;
         }     
      }
      public function alterarComSenha($usuario){
-        $this->sql = "UPDATE usuarios set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, pais = :pais, email = :email, TipoDeUsuario_idTipoUsuario = :TipoDeUsuario_idTipoUsuario, senhaAcesso = :senhaAcesso, telefone = :telefone, tipoDoc = :tipoDoc, numeroDoc = :numeroDoc  where idUsuario = :idUsuario";
+        $this->sql = "UPDATE usuarios set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, pais = :pais, email = :email, TipoDeUsuario_idTipoUsuario = :TipoDeUsuario_idTipoUsuario, hashSenha = :hashSenha, telefone = :telefone, tipoDoc = :tipoDoc, numeroDoc = :numeroDoc  where idUsuario = :idUsuario";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
@@ -83,7 +83,7 @@ class UsuarioDAO {
             $executar->bindValue(":pais", $usuario->pais);
             $executar->bindValue(":email", $usuario->email);
             $executar->bindValue(":TipoDeUsuario_idTipoUsuario", $usuario->TipoDeUsuario_idTipoUsuario);
-            $executar->bindValue(":senhaAcesso", $usuario->senhaAcesso);
+            $executar->bindValue(":hashSenha", $usuario->hashSenha);
             $executar->bindValue(":telefone", $usuario->telefone);
             $executar->bindValue(":tipoDoc", $usuario->tipoDoc);
             $executar->bindValue(":numeroDoc", $usuario->numeroDoc);
@@ -124,7 +124,7 @@ class UsuarioDAO {
         }     
      }
      public function buscaSenha($usuario){
-        $this->sql = "SELECT senhaAcesso FROM usuarios 
+        $this->sql = "SELECT hashSenha FROM usuarios 
                         WHERE email = :email";
         try{
             $conexao = new Conexao();

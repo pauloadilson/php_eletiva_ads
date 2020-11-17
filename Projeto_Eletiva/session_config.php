@@ -106,7 +106,7 @@
                                             <label for="Grupos_idGrupo">Grupo:</label>
                                             <?php
                                                     $dao = new GrupoDAO();
-                                                    $grupoNome = $dao->consultarNomeGrupo($sessaoIniciada['Grupos_IdGrupo'],$sessaoIniciada['Estudos_IdEstudo']);
+                                                    $grupoNome = $dao->consultarNomeGrupo($sessaoIniciada['Grupos_idGrupo'],$sessaoIniciada['Estudos_idEstudo']);
                                                 ?>
                                                 <input type="text" name="Estudos_idEstudo" id="Estudos_idEstudo" class="form-control mb-2" value="<?= $grupoNome ?>" disabled>
                                         </div>

@@ -104,8 +104,8 @@
                                             <input type="email" class="form-control mb-2" id="email" name="email" value="<?= $resultado['email'] ?>">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="senhaAcesso">Senha:</label>
-                                            <input type="password" class="form-control mb-2" id="senhaAcesso" name="senhaAcesso">
+                                            <label for="hashSenha">Senha:</label>
+                                            <input type="password" class="form-control mb-2" id="hashSenha" name="hashSenha">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="TipoDeUsuario_idTipoUsuario">Tipo de Usuário:</label>
@@ -150,16 +150,16 @@
                                 
                                 $succeded = false;
                                 $dao = new UsuarioDAO();
-                                if (empty($_POST['senhaAcesso'])){
+                                if (empty($_POST['hashSenha'])){
                                     $succeded = ($dao->alterarSemSenha($usuario));
                                 } else {
                                     $pepper = "c1isvFdxMDdmjOlvxpecFw";
                                     
-                                    $pwd = $_POST['senhaAcesso'];
+                                    $pwd = $_POST['hashSenha'];
                                     $pwd_peppered = hash_hmac("sha256", $pwd, $pepper);
                                     $pwd_hashed = password_hash($pwd_peppered, PASSWORD_ARGON2I);
 
-                                    $usuario->senhaAcesso = $pwd_hashed;
+                                    $usuario->hashSenha = $pwd_hashed;
                                     $succeded = ($dao->alterarComSenha($usuario));
                                 }
     
