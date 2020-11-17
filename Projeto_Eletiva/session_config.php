@@ -55,6 +55,7 @@
                             if (!isset($_POST['btnInicTeste'])) {
 
                                 if (isset($_POST["btnInicSessao"])) {
+                                    //var_dump($_POST);
                                     $_GET = array();
 
                                     $sessao = new SessaoDeTeste();
@@ -132,12 +133,12 @@
                                         <div class="form-group col-md-4">
                                             <label for="numeroSessao">Forma de Instrução:</label>
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="audio" name="audio" checked>
-                                                <label class="custom-control-label" for="audio">Audio</label>
-                                            </div>
-                                            <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" id="escrita" name="escrita">
                                                 <label class="custom-control-label" for="escrita">Escrita</label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="audio" name="audio" checked>
+                                                <label class="custom-control-label" for="audio">Audio</label>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary ml-3" type="submit" name="btnInicTeste">Iniciar Teste</button>

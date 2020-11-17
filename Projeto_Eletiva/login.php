@@ -36,12 +36,12 @@
             <div class=" p-4">
             <form method="POST" >
                 <div class="form-group">
-                    <label for="email">Nome de usuário:</label>
-                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <label for="email">E-mail do usuário:</label>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email@email.com">
                 </div>
                 <div class="form-group">
                     <label for="senhaAcesso">Senha:</label>
-                    <input type="password" class="form-control" name="senhaAcesso" id="senhaAcesso" placeholder="Password">
+                    <input type="password" class="form-control" name="senhaAcesso" id="senhaAcesso" placeholder="senha">
                 </div>
                 <input type="submit" class="btn btn-primary" value="Enviar">
             </form>
