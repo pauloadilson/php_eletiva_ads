@@ -28,6 +28,9 @@
     <a class="nav-link btn" id="pills-session-tab" href="institution.php" >Instituições de Ensino</a>
   </li>
   <li class="nav-item ml-auto">
+    <a class="nav-link btn btn-outline-primary" id="pills-session-tab" href="hardware.php" >Testar Hardware</a>
+  </li>
+  <li class="nav-item ml-2">
     <a class="nav-link btn btn-outline-danger" id="pills-session-tab" href="logout.php" >Sair</a>
   </li>
 </ul>
