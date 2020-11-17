@@ -17,8 +17,6 @@
     require_once("classes/model/dao/ParticipanteDAO.class.php");
     require_once("classes/model/domain/Participante.class.php");
     require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
-    require_once("classes/model/dao/EstudoDAO.class.php");
-    require_once("classes/model/dao/GrupoDAO.class.php");
     ?>
 </head>
 
@@ -54,11 +52,15 @@
                                             <label for="nome">Nome:</label>
                                             <input type="text" class="form-control mb-2" id="nome" name="nome" value="<?= $resultado['nome'] ?>">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-3">
                                             <label for="dataNascimento">Data de Nascimento:</label>
                                             <input type="date" class="form-control mb-2" id="dataNascimento" name="dataNascimento" value="<?= $resultado['dataNascimento'] ?>">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-3">
+                                            <label for="telefone">Telefone:</label>
+                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone" value="<?= $resultado['telefone'] ?>">
+                                        </div>
+                                        <div class="form-group col-md-2">
                                             <label for="pais">País:</label>
                                             <input type="text" class="form-control mb-2" id="pais" name="pais" value="<?= $resultado['pais'] ?>">
                                         </div>
@@ -90,40 +92,6 @@
                                             </small>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="Estudos_idEstudo">Estudo:</label>
-                                            <?php
-                                                $EstudoDao = new EstudoDAO();
-                                                $estudo = $EstudoDao->consultarId($resultado['Estudos_idEstudo']);
-                                            ?>
-                                            <input type="text" class="form-control mb-2" id="Estudos_idEstudo" name="Estudos_idEstudo" value="<?= $estudo['titulo'] ?>" disabled>
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="Grupos_idGrupo">Grupo:</label>
-                                            <select name="Grupos_idGrupo" class="form-control mb-2">
-                                            <?php
-                                                $dao = new GrupoDAO();
-                                                $grupos = $dao->consultar();
-                                                //var_dump($resultado['Estudos_idEstudo']);
-                                                while ($linha = $grupos->fetch(PDO::FETCH_ASSOC)) {
-                                                    //var_dump($linha['Estudos_idEstudo']);
-                                                    if ($linha['Estudos_idEstudo'] == $resultado['Estudos_idEstudo']) {
-                                                        if ($linha['idGrupo'] == $resultado['Grupos_idGrupo']) {
-                                                            ?>
-                                                            <option value="<?= $linha['idGrupo'] ?>" selected><?= $linha['nome'] ?></option>
-                                                    <?php   
-                                                        } else{
-                                                    ?>
-                                                        <option value="<?= $linha['idGrupo'] ?>"><?= $linha['nome'] ?></option>
-                                                <?php
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="form-group col-md-4">
                                             <label for="primeiroResponsavel">Primeiro Responsável</label>
                                             <input type="text" class="form-control mb-2" id="primeiroResponsavel" name="primeiroResponsavel" value="<?= $resultado['primeiroResponsavel'] ?>">
                                         </div>
@@ -131,10 +99,7 @@
                                             <label for="segundoResponsavel">Segundo Responsável:</label>
                                             <input type="text" class="form-control mb-2" id="segundoResponsavel" name="segundoResponsavel" value="<?= $resultado['segundoResponsavel'] ?>">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="telefone">Telefone:</label>
-                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone" value="<?= $resultado['telefone'] ?>">
-                                        </div>
+
                                        
                                         <button class="btn btn-primary ml-3" type="submit" name="btnAltSub">Alterar participante </button>
                                     </div>
@@ -149,7 +114,6 @@
                                 $participante->dataNascimento = $_POST['dataNascimento'];
                                 $participante->pais = $_POST['pais'];
                                 $participante->InstituicoesEnsino_idInstituicaoEnsino = $_POST['InstituicoesEnsino_idInstituicaoEnsino'];
-                                $participante->Grupos_idGrupo = $_POST['Grupos_idGrupo'];
                                 $participante->primeiroResponsavel = $_POST['primeiroResponsavel'];
                                 $participante->segundoResponsavel = $_POST['segundoResponsavel'];
                                 $participante->telefone = $_POST['telefone'];

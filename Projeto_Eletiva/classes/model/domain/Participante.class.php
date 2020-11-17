@@ -6,7 +6,6 @@ class Participante {
     private $nome;
     private $dataNascimento;
     private $pais;
-    private $Grupos_idGrupo;
 
     public function __set($atrib , $value){  
         return $this->$atrib = $value;

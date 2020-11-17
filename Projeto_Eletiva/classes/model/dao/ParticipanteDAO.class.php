@@ -5,8 +5,8 @@ class ParticipanteDAO {
 
     public function inserir($participante)
     {
-        $this->sql = "INSERT INTO participantes (InstituicoesEnsino_idInstituicaoEnsino, nome, dataNascimento, pais, grupo, primeiroResponsavel, segundoResponsavel, telefone, Estudos_idEstudo) "
-        ."VALUES (:InstituicoesEnsino_idInstituicaoEnsino, :nome, :dataNascimento, :pais, :grupo, :primeiroResponsavel, :segundoResponsavel, :telefone, :Estudos_idEstudo)";
+        $this->sql = "INSERT INTO participantes (InstituicoesEnsino_idInstituicaoEnsino, nome, dataNascimento, pais, primeiroResponsavel, segundoResponsavel, telefone) "
+        ."VALUES (:InstituicoesEnsino_idInstituicaoEnsino, :nome, :dataNascimento, :pais, :primeiroResponsavel, :segundoResponsavel, :telefone)";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql); // substituir parametros pelos valores a serm incluidos no BD
@@ -14,11 +14,9 @@ class ParticipanteDAO {
             $executar->bindValue(":nome", $participante->nome);
             $executar->bindValue(":dataNascimento", $participante->dataNascimento);
             $executar->bindValue(":pais", $participante->pais);
-            $executar->bindValue(":grupo", $participante->grupo);
             $executar->bindValue(":primeiroResponsavel", $participante->primeiroResponsavel);
             $executar->bindValue(":segundoResponsavel", $participante->segundoResponsavel);
             $executar->bindValue(":telefone", $participante->telefone);
-            $executar->bindValue(":Estudos_idEstudo", $participante->Estudos_idEstudo);
             return $executar->execute();
         } catch (Exception $e){
             return 0;
@@ -50,7 +48,7 @@ class ParticipanteDAO {
         }     
      }
      public function alterar($participante){
-        $this->sql = "UPDATE participantes set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, dataNascimento = :dataNascimento, pais = :pais, Grupos_idGrupo = :Grupos_idGrupo, primeiroResponsavel = :primeiroResponsavel, segundoResponsavel = :segundoResponsavel, telefone = :telefone where idParticipante = :idParticipante";
+        $this->sql = "UPDATE participantes set InstituicoesEnsino_idInstituicaoEnsino = :InstituicoesEnsino_idInstituicaoEnsino, nome = :nome, dataNascimento = :dataNascimento, pais = :pais, primeiroResponsavel = :primeiroResponsavel, segundoResponsavel = :segundoResponsavel, telefone = :telefone where idParticipante = :idParticipante";
         try {
             $conexao = new Conexao();
             $executar = $conexao->getCon()->prepare($this->sql);
@@ -58,7 +56,6 @@ class ParticipanteDAO {
             $executar->bindValue(":dataNascimento", $participante->dataNascimento);
             $executar->bindValue(":pais", $participante->pais);
             $executar->bindValue(":InstituicoesEnsino_idInstituicaoEnsino", $participante->InstituicoesEnsino_idInstituicaoEnsino);
-            $executar->bindValue(":Grupos_idGrupo", $participante->Grupos_idGrupo);
             $executar->bindValue(":primeiroResponsavel", $participante->primeiroResponsavel);
             $executar->bindValue(":segundoResponsavel", $participante->segundoResponsavel);
             $executar->bindValue(":telefone", $participante->telefone);

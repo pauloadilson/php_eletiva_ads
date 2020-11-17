@@ -16,9 +16,7 @@
     <?php
         require_once("classes/config/Conexao.class.php");
         require_once("classes/model/dao/InstituicaoDeEnsinoDAO.class.php");
-        require_once("classes/model/dao/EstudoDAO.class.php");
         require_once("classes/model/dao/ParticipanteDAO.class.php");
-        require_once("classes/model/dao/GrupoDAO.class.php");
         require_once("classes/model/domain/Participante.class.php");
     ?>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -46,11 +44,15 @@
                                             <label for="nome">Nome:</label>
                                             <input type="text" class="form-control mb-2" id="nome" name="nome">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-3">
                                             <label for="dataNascimento">Data de Nascimento:</label>
                                             <input type="date" class="form-control mb-2" id="dataNascimento" name="dataNascimento">
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-3">
+                                            <label for="telefone">Telefone:</label>
+                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone">
+                                        </div>
+                                        <div class="form-group col-md-2">
                                             <label for="pais">País:</label>
                                             <input type="text" class="form-control mb-2" id="pais" name="pais">
                                         </div>
@@ -78,51 +80,6 @@
                                             </small>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="Estudos_idEstudo">Estudo:</label>
-                                            <select name="Estudos_idEstudo" id="Estudos_idEstudo" class="form-control mb-2">
-                                                <option selected>Escolha um estudo</option>
-                                                <?php
-
-                                                $dao = new EstudoDAO();
-                                                $estudos = $dao->consultar();
-                                                while ($linha = $estudos->fetch(PDO::FETCH_ASSOC)) {
-                                                ?>
-                                                    <option value="<?= $linha['idEstudo'] ?>"><?= $linha['titulo'] ?></option>
-                                                <?php
-                                                }
-                                                ?>
-
-                                            </select>
-                                        </div>
-                                        <script>
-                                            $('#Estudos_idEstudo').on('change', function() {
-                                                var idEstudo = $('#Estudos_idEstudo').val(); 
-                                                //alert( `idEstudo: ${idEstudo}` );
-                                                $.ajax({
-                                                    url:'getGroups.php',
-                                                    type: 'POST',
-                                                    data:{Estudos_idEstudo:idEstudo},
-                                                    beforeSend: function (){
-                                                        $('#Grupos_idGrupo').html("<option>Carregando..</option>")
-                                                    },
-                                                    success: function (data) {
-                                                        $('#Grupos_idGrupo').html(data);
-                                                        
-                                                    },
-                                                    error: function (data) {
-                                                        $('#Grupos_idGrupo').html("Houve um erro ao carregar!");
-                                                        
-                                                    },
-                                                })
-                                                });
-                                        </script>
-                                        <div class="form-group col-md-4">
-                                            <label for="Grupos_idGrupo">Grupo:</label>
-                                            <select name="Grupos_idGrupo" id="Grupos_idGrupo" class="form-control mb-2">
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group col-md-4">
                                             <label for="primeiroResponsavel">Primeiro Responsável</label>
                                             <input type="text" class="form-control mb-2" id="primeiroResponsavel" name="primeiroResponsavel">
                                         </div>
@@ -130,10 +87,7 @@
                                             <label for="segundoResponsavel">Segundo Responsável:</label>
                                             <input type="text" class="form-control mb-2" id="segundoResponsavel" name="segundoResponsavel">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="telefone">Telefone:</label>
-                                            <input type="tel" class="form-control mb-2" id="telefone" name="telefone">
-                                        </div>
+
                                        
                                         <button class="btn btn-primary ml-3" type="submit" name="btnIncSub">Incluir Usuário</button>
                                     </div>
@@ -152,11 +106,9 @@
                                 $participante->nome = $_POST['nome'];
                                 $participante->dataNascimento = $_POST['dataNascimento'];
                                 $participante->pais = $_POST['pais'];
-                                $participante->grupo = $_POST['grupo'];
                                 $participante->primeiroResponsavel = $_POST['primeiroResponsavel'];
                                 $participante->segundoResponsavel = $_POST['segundoResponsavel'];
                                 $participante->telefone = $_POST['telefone'];
-                                $participante->Estudos_idEstudo = $_POST['Estudos_idEstudo'];
 
                                 $dao = new ParticipanteDAO();
                                 if ($dao->inserir($participante))
@@ -212,8 +164,6 @@
                                     <th>Nome</th>
                                     <th>Data de Nascimento</th>
                                     <th>País</th>
-                                    <th>Estudo</th>
-                                    <th>Grupo</th>
                                     <th>Primeiro Responsável</th>
                                     <th>Segundo Responsável</th>
                                     <th>Telefone</th>
@@ -230,18 +180,6 @@
                                 //var_dump($nomeInstituicao);
                                 return $nomeInstituicao;
                             }
-                            function getEstudoTitulo($idEstudo) {
-                                $EstudoDao = new EstudoDAO();
-                                $tituloEstudo = $EstudoDao->consultarTituloPeloId($idEstudo);
-                                //var_dump($tituloEstudo);
-                                return $tituloEstudo;
-                            }
-                            function getGroupName($idGrupo,$idEstudo) {
-                                $grupoDao = new GrupoDAO();
-                                $nomeGrupo = $grupoDao->consultarNomeGrupo($idGrupo,$idEstudo);
-                                //var_dump($tituloEstudo);
-                                return $nomeGrupo;
-                            }
                             
                             
                             $ParticipanteDao = new ParticipanteDAO();
@@ -254,8 +192,6 @@
                                     <td><?= $linha['nome'] ?></td>
                                     <td><?= date("d-m-Y", strtotime(($linha['dataNascimento']))) ?></td>
                                     <td><?= $linha['pais'] ?></td>
-                                    <td><?= getEstudoTitulo($linha['Estudos_idEstudo']) ?></td>
-                                    <td><?= getGroupName($linha['Grupos_idGrupo'],$linha['Estudos_idEstudo']) ?></td>
                                     <td><?= $linha['primeiroResponsavel'] ?></td>
                                     <td><?= $linha['segundoResponsavel'] ?></td>
                                     <td><?= $linha['telefone'] ?></td>
@@ -273,7 +209,7 @@
                     </div>
                     <script>
                         $(document).ready(function() {
-                        var groupColumn = 4;
+                        var groupColumn = 7;
                         var table = $('#tParticipantes').DataTable({ 
                             "scrollX": true,
                             language: {
