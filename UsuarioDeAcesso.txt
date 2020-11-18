@@ -1,0 +1,11 @@
+E-mail login: vanessa.borges2@fatec.sp.gov.br
+Senha: vanessa
+
+Há criptografia.
+
+Há controle de acesso. As páginas de Usuários e Estudos são restritas a pesquisadores.
+Avaliadores só tem acesso às páginas de Participantes, IE e Sessões.
+
+Exemplo
+E-mail login: maria@gmail.com
+senha: 99999

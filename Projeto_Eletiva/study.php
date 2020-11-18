@@ -30,9 +30,9 @@
         <div class="app">
             <?php require_once("template/header.php"); ?>
             <?php require_once("template/menu.php"); ?>
-            <main class="content">
+            <main class="content  p-3">
                 <div class="container-fluid ">
-                    <div class="p-3 mt-3">
+                    <div class="p-3">
                         <a class="btn btn-light" data-toggle="collapse" href="#inserirInstituicao" role="button" aria-expanded="false" aria-controls="inserirInstituicao">
                             Novo Estudo
                         </a>

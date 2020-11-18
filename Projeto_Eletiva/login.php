@@ -23,7 +23,17 @@
             grid-template-areas: "header" "content";
             height: 100vh;
             background-color: #F5F5F5;
-}
+            
+            }
+        main.content {
+            grid-area: content;
+            padding: 0px 15px 0 15px;
+            width: 100%;  
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 540px;
+        }
     </style>
 </head>
 
@@ -31,8 +41,8 @@
     <div id="root">
         <div class="app">
         <?php require_once("template/header.php"); ?>
-        <main class="content p-5 m-5 align-self-center"  >
-            <div class="container w-50">
+        <main class="content align-self-center align-self-middle"  >
+            <div class="container">
             <div class=" p-4">
             <form method="POST" >
                 <div class="form-group">
